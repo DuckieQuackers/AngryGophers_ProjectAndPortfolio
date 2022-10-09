@@ -4,44 +4,40 @@ using UnityEngine;
 
 public class cameraControls : MonoBehaviour
 {
-    [SerializeField] int sensHort;
-    [SerializeField] int sensVert;
-
-    [SerializeField] int lockVertMin;
-    [SerializeField] int lockVertMax;
-
+    [SerializeField] float horSens;
+    [SerializeField] float vertSens;
+    [SerializeField] float lookVertMax;
+    [SerializeField] float lookVertMin;
     [SerializeField] bool invert;
 
     float xRotation;
-
-
+    // Start is called before the first frame update
     void Start()
     {
+        //lock cursor to middle and make invisible
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
     }
 
-    
+    // Update is called once per frame
     void LateUpdate()
     {
-        //get input
-        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensHort;
-        float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensVert;
-
+        //camera input
+        float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * horSens;
+        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * vertSens;
         if (invert)
-        {
-            xRotation += mouseY;
-        }
-        else
         {
             xRotation -= mouseY;
         }
-        
+        else
+        {
+            xRotation += mouseY;
+        }
 
-        //clamp camera rotation
-        xRotation = Mathf.Clamp(xRotation, lockVertMin, lockVertMax);
-
-        //rotate camera on x-axis
+        //clamp xRotation
+        xRotation = Mathf.Clamp(xRotation, lookVertMin, lookVertMax);
+        //rotate camera
         transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
         //rotate player

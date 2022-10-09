@@ -3,138 +3,53 @@ using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
-public class playerController : MonoBehaviour, IDamage
+public class playerController : MonoBehaviour
 {
-    [Header("----- Components -----")]
+    [Header("----Player Stats----")]
+    [SerializeField] int HP;
+    [SerializeField] float sprintSpeed;
     [SerializeField] CharacterController controller;
-
-    [Header("----- Player Stats -----")]
-    [Range(0, 10)][SerializeField] int HP;
-    [Range(1, 5)] [SerializeField] float playerSpeed;
-    [Range(8, 15)][SerializeField] float jumpHeight;
-    [Range(15, 35)][SerializeField] float gravityValue;
-    [Range(1, 3)][SerializeField] int jumpsMax;
-
-
-    [Header("----- Gun Stats -----")]
-    [SerializeField] float shootRate;
-    [SerializeField] int shootDist;
-    [SerializeField] int shootDmg;
-    [SerializeField] GameObject gunModel;
-    [SerializeField] List<gunStats> gunStat = new List<gunStats>();
-
-  
-
-    
-
+    [SerializeField] float playerSpeed;
+    [SerializeField] float jumpHeight;
+    [SerializeField] float gravityModifier;
     private Vector3 playerVelocity;
-    private int timesJumped;
-    bool isShooting;
-    int selectGun;
-    int HPOrig;
+    [SerializeField] int jumpsMax;
+    private int jumpCount;
 
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
-        HPOrig = HP;
-        respawn();
+
     }
 
+    // Update is called once per frame
     void Update()
     {
-        movement();
-        StartCoroutine(shoot());
-        gunSelect();
-    }
-    void movement()
-    {
+        //resetting playerVelocity and jumpCount
         if (controller.isGrounded && playerVelocity.y < 0)
         {
-            playerVelocity.y = 0f;
-            timesJumped = 0;
+            jumpCount = 0;
+            playerVelocity.y = 0;
         }
-        //first person
-        Vector3 move = (transform.right * Input.GetAxis("Horizontal")) +
-                       (transform.forward * Input.GetAxis("Vertical"));
-
-        controller.Move(move * Time.deltaTime * playerSpeed);
-
-
-
-        // Changes the height position of the player..
-        if (Input.GetButtonDown("Jump") && timesJumped < jumpsMax)
+        //Player Movement and Sprint
+        Vector3 move = (transform.right * Input.GetAxis("Horizontal") + (transform.forward * Input.GetAxis("Vertical")));
+        if (Input.GetButton("Sprint"))
         {
-            timesJumped++;
+            controller.Move(move * Time.deltaTime * sprintSpeed);
+        }
+        else
+        {
+            controller.Move(move * Time.deltaTime * playerSpeed);
+        }
+
+        //jumping
+        if (Input.GetButtonDown("Jump") && jumpCount < jumpsMax)
+        {
+            jumpCount++;
             playerVelocity.y = jumpHeight;
         }
-
-        playerVelocity.y -= gravityValue * Time.deltaTime;
+        playerVelocity.y -= gravityModifier * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
-    }
-    IEnumerator shoot()
-    {
-        if (gunStat.Count >0 && Input.GetButton("Shoot")  && !isShooting)
-        {
-
-            isShooting = true;
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
-            {
-                if (hit.collider.GetComponent<IDamage>() != null)
-                {
-                    hit.collider.GetComponent<IDamage>().takeDamage(shootDmg);
-                }
-
-                //Instantiate(cube, hit.point, transform.rotation);
-            }
-
-            Debug.Log("Shoot!");
-            yield return new WaitForSeconds(shootRate);
-            isShooting = false;
-        }
-        
-    }
-    public void gunPickup(gunStats stats)
-    {
-        shootRate = stats.shootRate;
-        shootDist = stats.shootDist;
-        shootDmg = stats.shootDamage;
-        gunModel.GetComponent<MeshFilter>().sharedMesh = stats.gunModel.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = stats.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
-
-        gunStat.Add(stats);
-    }
-    void gunSelect()
-    {
-        if (gunStat.Count > 1)
-        {
-            if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectGun < gunStat.Count - 1)
-            {
-                selectGun++;
-                changeGun();
-            }
-
-            else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectGun > 0)
-            {
-                selectGun--;
-                changeGun();
-            }
-        }
-    }
-    void changeGun()
-    {
-        shootRate = gunStat[selectGun].shootRate;
-        shootDist = gunStat[selectGun].shootDist;
-        shootDmg = gunStat[selectGun].shootDamage;
-
-        gunModel.GetComponent<MeshFilter>().sharedMesh = gunStat[selectGun].gunModel.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunStat[selectGun].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
-
-    }
-    public void takeDamage(int dmg)
-    {
-        HP -= dmg;
-        UpdatePlayerHud();
-        StartCoroutine(gameManager.instance.playerDamage());
 
         if (HP <= 0)
         {

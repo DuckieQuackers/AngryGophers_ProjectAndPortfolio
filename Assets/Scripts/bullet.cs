@@ -8,6 +8,7 @@ public class bullet : MonoBehaviour
 
     [SerializeField] int speed;
     [SerializeField] int damage;
+    [SerializeField] float lifeTime;
 
     [SerializeField] int destroyTime;
 
@@ -15,8 +16,9 @@ public class bullet : MonoBehaviour
     void Start()
     {
         rb.velocity = transform.forward * speed;
-        Destroy(gameObject, destroyTime);
+        Destroy(gameObject, lifeTime);
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
