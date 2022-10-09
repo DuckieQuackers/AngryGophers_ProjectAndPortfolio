@@ -985,19 +985,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1654692837483166, guid: 313df21c32a46e247960cfd9a4c84a32, type: 3}
       propertyPath: m_NavMeshLayer
+    - target: {fileID: 2006940814, guid: 9ee3416d267dda748bf00cfd7b1d3366, type: 3}
+      propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2006940814, guid: 9ee3416d267dda748bf00cfd7b1d3366, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
     - target: {fileID: 1654692837483166, guid: 313df21c32a46e247960cfd9a4c84a32, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
-    - target: {fileID: 1712809475346634, guid: 313df21c32a46e247960cfd9a4c84a32, type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
+    - target: {fileID: 2006940815, guid: 9ee3416d267dda748bf00cfd7b1d3366, type: 3}
+      propertyPath: m_fontSize
+      value: 75
       objectReference: {fileID: 0}
-    - target: {fileID: 1712809475346634, guid: 313df21c32a46e247960cfd9a4c84a32, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
+    - target: {fileID: 2006940815, guid: 9ee3416d267dda748bf00cfd7b1d3366, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 4481593083717680, guid: 313df21c32a46e247960cfd9a4c84a32, type: 3}
       propertyPath: m_RootOrder
@@ -1356,6 +1361,29 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eca81be1da8ea024f9db5a23daf262cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyNumber: 0
+  player: {fileID: 0}
+  playerScript: {fileID: 0}
+  spawnPosition: {fileID: 0}
+  pauseMenu: {fileID: 1361176564}
+  playerDeadMenu: {fileID: 1356659707}
+  winMenu: {fileID: 1041423691}
+  menuCurrentlyOpen: {fileID: 0}
+  playerDamageFlash: {fileID: 705042252}
+  playerHPBar: {fileID: 2069008667}
+  enemyCountText: {fileID: 268129830}
+  isPaused: 0
+--- !u!1 &1409536459 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 508533313, guid: 9ee3416d267dda748bf00cfd7b1d3366, type: 3}
+  m_PrefabInstance: {fileID: 763619521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1409536465
+MonoBehaviour:
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -2110,7 +2138,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2585285376980831116, guid: f9d4ec49121a2574a811b5c9b2b94755, type: 3}
       propertyPath: m_Name
-      value: Enemy1
+      value: Spawn Position
+      objectReference: {fileID: 0}
+    - target: {fileID: 6990329328478604583, guid: 8d195154812d4c843a8b774448b71b7c, type: 3}
+      propertyPath: m_TagString
+      value: Spawn Position
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9d4ec49121a2574a811b5c9b2b94755, type: 3}
@@ -2168,6 +2200,10 @@ PrefabInstance:
     - target: {fileID: 6495032185901038212, guid: 7e54c4ca36264274da28d42cf042155c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7832641428620445206, guid: e83313c1603cd48479a0cf2f44904027, type: 3}
+      propertyPath: m_Name
+      value: Level Geo
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e54c4ca36264274da28d42cf042155c, type: 3}

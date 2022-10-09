@@ -10,6 +10,9 @@ public class bullet : MonoBehaviour
     [SerializeField] int damage;
     [SerializeField] float lifeTime;
 
+    [SerializeField] int destroyTime;
+
+    // Start is called before the first frame update
     void Start()
     {
         rb.velocity = transform.forward * speed;
@@ -20,9 +23,14 @@ public class bullet : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            //Damage player once the code is set up
+            if (other.GetComponent<IDamage>() != null)
+            {
+                gameManager.instance.playerScript.takeDamage(damage);
+                
+            }
         }
 
         Destroy(gameObject);
     }
+
 }

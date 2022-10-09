@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class playerController : MonoBehaviour
@@ -50,6 +51,25 @@ public class playerController : MonoBehaviour
         playerVelocity.y -= gravityModifier * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
 
+        if (HP <= 0)
+        {
+           gameManager.instance.playerDeadMenu.SetActive(true);
+            gameManager.instance.cursorLockPause();
+        }
 
     }
+    void UpdatePlayerHud()
+    {
+        gameManager.instance.playerHPBar.fillAmount = (float)HP / (float)HPOrig;
+    }
+    public void respawn()
+    {
+        controller.enabled = false;
+        gameManager.instance.playerDeadMenu.SetActive(false);
+        HP = HPOrig;
+        UpdatePlayerHud();
+        transform.position = gameManager.instance.spawnPosition.transform.position;
+        controller.enabled = true;
+    }
 }
+

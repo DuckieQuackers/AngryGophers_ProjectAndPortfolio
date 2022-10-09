@@ -9,6 +9,7 @@ public class cameraControls : MonoBehaviour
     [SerializeField] float lookVertMax;
     [SerializeField] float lookVertMin;
     [SerializeField] bool invert;
+
     float xRotation;
     // Start is called before the first frame update
     void Start()
@@ -38,8 +39,11 @@ public class cameraControls : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, lookVertMin, lookVertMax);
         //rotate camera
         transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+
         //rotate player
         transform.parent.Rotate(Vector3.up * mouseX);
 
     }
+
+   
 }
