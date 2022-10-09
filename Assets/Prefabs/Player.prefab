@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3321e1546e76334a8f84dc5bc1d46e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HP: 5
   sprintSpeed: 15
   controller: {fileID: 6495032185901038210}
   playerSpeed: 5
