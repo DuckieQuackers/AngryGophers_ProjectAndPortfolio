@@ -5,10 +5,18 @@ using UnityEngine.AI;
 
 public class enemyAi : MonoBehaviour, iDamage
 {
-    [SerializeField] int hp;
+    [Header ("----- Components -----")]
     [SerializeField] NavMeshAgent agent;
+    [SerializeField] GameObject bullet;
+    [SerializeField] GameObject bulletOrigin;
 
-    public bool playerInRange;
+    [Header("----- Enemy stats -----")]
+    [SerializeField] int hp;
+    [SerializeField] float shootRate;
+
+
+    bool playerInRange;
+    bool isShooting;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +28,12 @@ public class enemyAi : MonoBehaviour, iDamage
     void Update()
     {
         if (playerInRange)
+        {
             agent.SetDestination(GameObject.FindGameObjectWithTag("Player").transform.position);
+
+            if(!isShooting)
+                StartCoroutine(shoot());
+        }
     }
 
     public void takeDamage(int dmg)
@@ -31,15 +44,22 @@ public class enemyAi : MonoBehaviour, iDamage
             Destroy(gameObject);
     }
 
-    public void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
             playerInRange = true;
     }
 
-    public void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if(other.CompareTag("Player"))
             playerInRange= false;
+    }
+    IEnumerator shoot()
+    {
+        isShooting = true;
+        Instantiate(bullet, bulletOrigin.transform.position, transform.rotation);
+        yield return new WaitForSeconds(shootRate);
+        isShooting = false;
     }
 }
