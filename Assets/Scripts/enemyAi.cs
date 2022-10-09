@@ -8,6 +8,8 @@ public class enemyAi : MonoBehaviour, iDamage
     [SerializeField] int hp;
     [SerializeField] NavMeshAgent agent;
 
+    public bool playerInRange;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +19,8 @@ public class enemyAi : MonoBehaviour, iDamage
     // Update is called once per frame
     void Update()
     {
-        agent.SetDestination(GameObject.FindGameObjectWithTag("Player").transform.position);
+        if (playerInRange)
+            agent.SetDestination(GameObject.FindGameObjectWithTag("Player").transform.position);
     }
 
     public void takeDamage(int dmg)
@@ -26,5 +29,17 @@ public class enemyAi : MonoBehaviour, iDamage
         
         if(hp <= 0)
             Destroy(gameObject);
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            playerInRange = true;
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if(other.CompareTag("Player"))
+            playerInRange= false;
     }
 }
