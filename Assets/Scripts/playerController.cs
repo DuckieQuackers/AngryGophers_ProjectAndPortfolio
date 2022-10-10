@@ -20,10 +20,12 @@ public class playerController : MonoBehaviour, iDamage
     [SerializeField] float shootDist;
     [SerializeField] int shootDmg;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    int HPOrig;
 
+    private void Start()
+    {
+        HPOrig = HP;
+        respawn();
     }
 
     // Update is called once per frame
@@ -90,5 +92,18 @@ public class playerController : MonoBehaviour, iDamage
         {
             Debug.Log("Player died");
         }
+    }
+    void UpdatePlayerHud()
+    {
+        gameManager.instance.playerHPBar.fillAmount = (float)HP / (float)HPOrig;
+    }
+    public void respawn()
+    {
+        controller.enabled = false;
+        gameManager.instance.playerDeadMenu.SetActive(false);
+        HP = HPOrig;
+        UpdatePlayerHud();
+        transform.position = gameManager.instance.spawnPosition.transform.position;
+        controller.enabled = true;
     }
 }
