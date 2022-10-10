@@ -4420,6 +4420,18 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6495032185901038213, guid: 7e54c4ca36264274da28d42cf042155c, type: 3}
+      propertyPath: shootDmg
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6495032185901038213, guid: 7e54c4ca36264274da28d42cf042155c, type: 3}
+      propertyPath: shootDist
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6495032185901038213, guid: 7e54c4ca36264274da28d42cf042155c, type: 3}
+      propertyPath: shootRate
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6495032185901038213, guid: 7e54c4ca36264274da28d42cf042155c, type: 3}
       propertyPath: jumpHeight
       value: 10
       objectReference: {fileID: 0}
