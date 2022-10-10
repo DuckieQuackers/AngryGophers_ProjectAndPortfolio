@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class playerController : MonoBehaviour
 {
+    [Header("----Player Stats----")]
+    [SerializeField] int HP;
     [SerializeField] float sprintSpeed;
     [SerializeField] CharacterController controller;
     [SerializeField] float playerSpeed;
