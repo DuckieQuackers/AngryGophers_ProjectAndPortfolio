@@ -21,7 +21,7 @@ public class enemyAi : MonoBehaviour, iDamage
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameManager.instance.enemySpawn();
     }
 
     // Update is called once per frame
@@ -39,9 +39,12 @@ public class enemyAi : MonoBehaviour, iDamage
     public void takeDamage(int dmg)
     {
         hp -= dmg;
-        
-        if(hp <= 0)
+
+        if (hp <= 0)
+        {
             Destroy(gameObject);
+            gameManager.instance.checkEnemyTotal();
+        }
     }
 
     private void OnTriggerEnter(Collider other)

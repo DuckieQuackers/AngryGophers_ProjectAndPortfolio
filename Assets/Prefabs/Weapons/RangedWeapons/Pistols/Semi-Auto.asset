@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 1.2
   fireDistance: 30
-  damage: 5
+  damage: 3
   ammoCount: 12
   designModel: {fileID: 919132149155446097, guid: 8f9696fb6017be144a307b6586855ac0, type: 3}
   triggerSound: {fileID: 0}

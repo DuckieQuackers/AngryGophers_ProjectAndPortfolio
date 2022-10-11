@@ -77,12 +77,25 @@ public class gameManager : MonoBehaviour
     public void checkEnemyTotal()
     {
         enemyNumber--;
-        enemyCountText.text = enemyNumber.ToString("F0");
+        updateCountText();
+
         if (enemyNumber <= 0)
         {
             winMenu.SetActive(true);
             cursorLockPause();
         }
+    }
+
+    public void enemySpawn()
+    {
+        enemyNumber++;
+        updateCountText();
+    }
+
+    void updateCountText()
+    {
+
+        enemyCountText.text = "Enemies left: " + enemyNumber.ToString("F0");
     }
 }
 

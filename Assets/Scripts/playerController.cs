@@ -61,7 +61,6 @@ public class playerController : MonoBehaviour, iDamage
                     hit.collider.GetComponent<iDamage>().takeDamage(shootDmg);
                 }
             }
-            Debug.Log("Shot");
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
 
@@ -104,7 +103,8 @@ public class playerController : MonoBehaviour, iDamage
         StartCoroutine(gameManager.instance.playerDamage());
         if(HP <= 0)
         {
-            Debug.Log("Player died");
+            gameManager.instance.playerDeadMenu.SetActive(true);
+            gameManager.instance.cursorLockPause();
         }
     }
 
