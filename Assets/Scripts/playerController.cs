@@ -101,6 +101,7 @@ public class playerController : MonoBehaviour, iDamage
     {
         HP -= dmg;
         UpdatePlayerHud();
+        StartCoroutine(gameManager.instance.playerDamage());
         if(HP <= 0)
         {
             Debug.Log("Player died");
