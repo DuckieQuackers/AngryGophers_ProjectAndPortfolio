@@ -100,6 +100,7 @@ public class playerController : MonoBehaviour, iDamage
     public void takeDamage(int dmg)
     {
         HP -= dmg;
+        UpdatePlayerHud();
         if(HP <= 0)
         {
             Debug.Log("Player died");
