@@ -9,14 +9,22 @@ public class enemyAi : MonoBehaviour, iDamage
     [SerializeField] NavMeshAgent agent;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject bulletOrigin;
+    [SerializeField] GameObject eyes;
 
-    [Header("----- Enemy stats -----")]
-    [SerializeField] int hp;
-    [SerializeField] float shootRate;
+    [Header("----- Enemy combat -----")]
+    [Range(1, 50)][SerializeField] int hp;
+    [Range(.01f, 10)] [SerializeField] float shootRate;
 
+    [Header("----- Movement/patrol stats -----")]
+    [Range(1, 5)] [SerializeField] int facePlayerSpeed;
+    [Range(1,50)][SerializeField] int sightDis;
+    [Range(10, 90)] [SerializeField] float viewAngle;
 
     bool playerInRange;
+    bool lineOfSight;
     bool isShooting;
+    float angle;
+    Vector3 playerDir;
 
     // Start is called before the first frame update
     void Start()
@@ -27,13 +35,47 @@ public class enemyAi : MonoBehaviour, iDamage
     // Update is called once per frame
     void Update()
     {
-        if (playerInRange)
-        {
-            agent.SetDestination(GameObject.FindGameObjectWithTag("Player").transform.position);
 
-            if(!isShooting)
+        playerDir = gameManager.instance.player.transform.position - eyes.transform.position;
+        angle = Vector3.Angle(playerDir, transform.forward);
+
+        lineOfSight = canSeePlayer();
+
+        if (playerInRange || lineOfSight)
+        {
+            agent.SetDestination(gameManager.instance.player.transform.position);
+
+            if (agent.remainingDistance < agent.stoppingDistance)
+                facePlayer();
+
+
+            if (!isShooting)
                 StartCoroutine(shoot());
         }
+    }
+
+    bool canSeePlayer()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(eyes.transform.position, playerDir, out hit, sightDis))
+        {
+            if (hit.collider.CompareTag("Player") && angle <= viewAngle)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+        else
+            return false;
+    }
+
+    void facePlayer()
+    {
+        playerDir.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(playerDir);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * facePlayerSpeed);
     }
 
     public void takeDamage(int dmg)
