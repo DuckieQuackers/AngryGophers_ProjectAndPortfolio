@@ -7,6 +7,7 @@ public class enemyAi : MonoBehaviour, iDamage
 {
     [Header ("----- Components -----")]
     [SerializeField] NavMeshAgent agent;
+    [SerializeField] Renderer model;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject bulletOrigin;
     [SerializeField] GameObject eyes;
@@ -19,17 +20,20 @@ public class enemyAi : MonoBehaviour, iDamage
     [Range(1, 5)] [SerializeField] int facePlayerSpeed;
     [Range(1,50)][SerializeField] int sightDis;
     [Range(10, 90)] [SerializeField] float viewAngle;
+    [Range(1, 10)] [SerializeField] int speedChase;
 
     bool playerInRange;
     bool lineOfSight;
     bool isShooting;
     float angle;
+    float speedOriginal;
     Vector3 playerDir;
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager.instance.enemySpawn();
+        speedOriginal = agent.speed;
     }
 
     // Update is called once per frame
@@ -47,7 +51,6 @@ public class enemyAi : MonoBehaviour, iDamage
 
             if (agent.remainingDistance < agent.stoppingDistance)
                 facePlayer();
-
 
             if (!isShooting)
                 StartCoroutine(shoot());
@@ -81,6 +84,8 @@ public class enemyAi : MonoBehaviour, iDamage
     public void takeDamage(int dmg)
     {
         hp -= dmg;
+        agent.SetDestination(gameManager.instance.player.transform.position);
+        StartCoroutine(flashDamage());
 
         if (hp <= 0)
         {
@@ -100,11 +105,23 @@ public class enemyAi : MonoBehaviour, iDamage
         if(other.CompareTag("Player"))
             playerInRange= false;
     }
+
     IEnumerator shoot()
     {
         isShooting = true;
         Instantiate(bullet, bulletOrigin.transform.position, transform.rotation);
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
+    }
+
+    IEnumerator flashDamage()
+    {
+        model.material.color = Color.red;
+        agent.speed = 0;
+
+        yield return new WaitForSeconds(0.4f);
+
+        model.material.color = Color.white;
+        agent.speed = speedOriginal;
     }
 }

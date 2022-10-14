@@ -702,6 +702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 2585285375966286109}
+  model: {fileID: 2585285376967219958}
   bullet: {fileID: 4906676205782320287, guid: c329a44c854ed484697201b1b18e4112, type: 3}
   bulletOrigin: {fileID: 9116980585431672950}
   eyes: {fileID: 9116980585431672950}
@@ -710,7 +711,7 @@ MonoBehaviour:
   facePlayerSpeed: 4
   sightDis: 30
   viewAngle: 45
-  lineOfSight: 0
+  speedChase: 0
 --- !u!195 &2585285375966286109
 NavMeshAgent:
   m_ObjectHideFlags: 0
