@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu]
 
 public class itemGrabs : ScriptableObject
-{
+{ 
     //Gun and other ranged weapon values
     public float fireRate;
     public int fireDistance;

@@ -8,13 +8,18 @@ public class playerController : MonoBehaviour, iDamage
     [SerializeField] int HP;
     [SerializeField] int ammoHeld;
     [SerializeField] float sprintSpeed;
+    [SerializeField] float sprintOrig;
     [SerializeField] CharacterController controller;
     [SerializeField] float playerSpeed;
+    [SerializeField] float playerSpeedOrig;
     [SerializeField] float jumpHeight;
     [SerializeField] float gravityModifier;
     
     [SerializeField] int jumpsMax;
     private int jumpCount;
+    [SerializeField] bool isPoweredUp;
+    [SerializeField] int powerupChoice;
+    
     
     [Header("---Weapon Stats---")]
     [SerializeField] float shootRate;
@@ -29,6 +34,7 @@ public class playerController : MonoBehaviour, iDamage
     [SerializeField] GameObject gunModel;
 
     int HPOrig;
+    int jumpMaxOrig;
     private Vector3 playerVelocity;
     public bool isShooting;
     [SerializeField] int selectedGun;
@@ -36,6 +42,9 @@ public class playerController : MonoBehaviour, iDamage
     private void Start()
     {
         HPOrig = HP;
+        sprintOrig = sprintSpeed;
+        playerSpeedOrig = playerSpeed;
+        jumpMaxOrig = jumpsMax;
         respawn();
     }
 
@@ -138,6 +147,23 @@ public class playerController : MonoBehaviour, iDamage
                 HP = HPOrig;
             }
         }
+        else if (item.addSpeed == 10)
+        {
+            powerupChoice = 1;
+            playerSpeed += item.addSpeed;
+            StartCoroutine(powerUp());
+        }
+        else if(item.addJumps == 2)
+        {
+            powerupChoice = 2;
+            StartCoroutine(powerUp());
+        }
+        else if(item.damage == 50)
+        {
+            powerupChoice = 3;
+            StartCoroutine(powerUp());
+        }
+        
     }
 
     public void gunSelection()
@@ -182,5 +208,35 @@ public class playerController : MonoBehaviour, iDamage
         UpdatePlayerHud();
         transform.position = gameManager.instance.spawnPosition.transform.position;
         controller.enabled = true;
+    }
+   
+    IEnumerator powerUp()
+    {
+        isPoweredUp = true;
+        switch (powerupChoice)
+        {
+            case 1:
+                yield return new WaitForSeconds(5f);
+                isPoweredUp = false;
+                playerSpeed = playerSpeedOrig;
+                sprintSpeed = sprintOrig;
+                powerupChoice = 0;
+                break;
+
+            case 2:
+                yield return new WaitForSeconds(5f);
+                isPoweredUp = false;
+                jumpsMax = jumpMaxOrig;
+                powerupChoice = 0;
+                break;
+
+            case 3:
+
+                yield return new WaitForSeconds(5f);
+                isPoweredUp = false;
+                powerupChoice = 0;
+                break;
+        }
+       
     }
 }
