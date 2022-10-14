@@ -21,6 +21,7 @@ public class enemyAi : MonoBehaviour, iDamage
     [Range(1,50)][SerializeField] int sightDis;
     [Range(10, 90)] [SerializeField] float viewAngle;
     [Range(1, 10)] [SerializeField] int speedChase;
+    [Range(0,10)] [SerializeField] int roamDis;
 
     bool playerInRange;
     bool lineOfSight;
@@ -28,12 +29,15 @@ public class enemyAi : MonoBehaviour, iDamage
     float angle;
     float speedOriginal;
     Vector3 playerDir;
+    Vector3 origin;
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager.instance.enemySpawn();
+        origin = transform.position;
         speedOriginal = agent.speed;
+        roam();
     }
 
     // Update is called once per frame
@@ -47,6 +51,8 @@ public class enemyAi : MonoBehaviour, iDamage
 
         if (playerInRange || lineOfSight)
         {
+            agent.speed = speedChase;
+
             agent.SetDestination(gameManager.instance.player.transform.position);
 
             if (agent.remainingDistance < agent.stoppingDistance)
@@ -55,6 +61,25 @@ public class enemyAi : MonoBehaviour, iDamage
             if (!isShooting)
                 StartCoroutine(shoot());
         }
+        else if(agent.remainingDistance < 0.1 && agent.destination != gameManager.instance.player.transform.position)
+        {
+            roam();
+        }
+    }
+
+    void roam()
+    {
+        agent.stoppingDistance = 0;
+        agent.speed = speedOriginal;
+
+        Vector3 randomDir = Random.insideUnitSphere * roamDis;
+        randomDir += origin;
+        NavMeshHit hit;
+        NavMesh.SamplePosition(randomDir, out hit, 1, 1);
+        NavMeshPath path = new NavMeshPath();
+
+        agent.CalculatePath(hit.position, path);
+        agent.SetPath(path);
     }
 
     bool canSeePlayer()
@@ -119,7 +144,7 @@ public class enemyAi : MonoBehaviour, iDamage
         model.material.color = Color.red;
         agent.speed = 0;
 
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.2f);
 
         model.material.color = Color.white;
         agent.speed = speedOriginal;

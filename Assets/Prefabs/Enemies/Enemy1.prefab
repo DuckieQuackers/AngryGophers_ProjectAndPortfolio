@@ -711,7 +711,8 @@ MonoBehaviour:
   facePlayerSpeed: 4
   sightDis: 30
   viewAngle: 45
-  speedChase: 0
+  speedChase: 5
+  roamDis: 5
 --- !u!195 &2585285375966286109
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -722,7 +723,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.75
-  m_Speed: 4
+  m_Speed: 3
   m_Acceleration: 40
   avoidancePriority: 50
   m_AngularSpeed: 600
