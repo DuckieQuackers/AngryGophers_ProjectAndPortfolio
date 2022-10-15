@@ -6,6 +6,7 @@ public class playerController : MonoBehaviour, iDamage
 {
     [Header("----Player Stats----")]
     [SerializeField] int HP;
+    [SerializeField] int ammoHeld;
     [SerializeField] float sprintSpeed;
     [SerializeField] CharacterController controller;
     [SerializeField] float playerSpeed;
@@ -118,6 +119,27 @@ public class playerController : MonoBehaviour, iDamage
         weaponListStats.Add(stats);
     }
 
+    public void itemPickup(itemGrabs item)
+    {
+        shootRate += item.fireRate;
+        shootDist += item.fireDistance;
+        shootDmg += item.damage;
+        jumpsMax += item.addJumps;
+        sprintSpeed += item.addSpeed;
+        ammoHeld += item.ammoCount;
+        if(HP < HPOrig && item.addHealth == 1)
+        {
+            HP = HPOrig;
+        }else if(HP < HPOrig && item.addHealth == 2)
+        {
+            HP += 5;
+            if(HP > HPOrig)
+            {
+                HP = HPOrig;
+            }
+        }
+    }
+
     public void gunSelection()
     {
         if (weaponListStats.Count > 1)
@@ -148,7 +170,7 @@ public class playerController : MonoBehaviour, iDamage
         gunModel.GetComponent<MeshFilter>().sharedMesh = weaponListStats[selectedGun].designModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = weaponListStats[selectedGun].designModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
-    void UpdatePlayerHud()
+    public void UpdatePlayerHud()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / (float)HPOrig;
     }
