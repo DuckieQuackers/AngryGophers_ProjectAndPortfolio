@@ -3,30 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class enemyAi : MonoBehaviour, iDamage
+public class meleeEnemy : MonoBehaviour, iDamage
 {
-    [Header ("----- Components -----")]
+    [Header("----- Components -----")]
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
-    [SerializeField] GameObject bullet;
-    public GameObject eyes;
+    [SerializeField] GameObject mouth;
 
     [Header("----- Enemy combat -----")]
-    [Range(1, 50)][SerializeField] int hp;
-    [Range(.01f, 10)] [SerializeField] float attackRate;
+    [Range(1, 50)] [SerializeField] int hp;
+    [Range(.01f, 5)] [SerializeField] float biteRate;
+    [Range(1, 10)] [SerializeField] int biteDamage;
+    [Range(1, 10)] [SerializeField] float biteRange;
 
     [Header("----- Movement/patrol stats -----")]
     [Range(1, 5)] [SerializeField] int facePlayerSpeed;
-    [Range(1,50)][SerializeField] int sightDis;
+    [Range(1, 50)] [SerializeField] int sightDis;
     [Range(10, 90)] [SerializeField] float viewAngle;
     [Range(1, 10)] [SerializeField] int speedChase;
-    [Range(0,10)] [SerializeField] int roamDis;
+    [Range(0, 10)] [SerializeField] int roamDis;
 
     bool playerInRange;
     bool lineOfSight;
-    bool isShooting;
+    bool isBiting;
     float angle;
     float speedOriginal;
+    float stoppingDistance;
     Vector3 playerDir;
     Vector3 origin;
 
@@ -36,6 +38,7 @@ public class enemyAi : MonoBehaviour, iDamage
         gameManager.instance.enemySpawn();
         origin = transform.position;
         speedOriginal = agent.speed;
+        stoppingDistance = agent.stoppingDistance;
         roam();
     }
 
@@ -43,13 +46,14 @@ public class enemyAi : MonoBehaviour, iDamage
     void Update()
     {
 
-        playerDir = gameManager.instance.player.transform.position - eyes.transform.position;
+        playerDir = gameManager.instance.player.transform.position - mouth.transform.position;
         angle = Vector3.Angle(playerDir, transform.forward);
 
         lineOfSight = canSeePlayer();
 
         if (playerInRange || lineOfSight)
         {
+            agent.stoppingDistance = stoppingDistance;
             agent.speed = speedChase;
 
             agent.SetDestination(gameManager.instance.player.transform.position);
@@ -57,10 +61,10 @@ public class enemyAi : MonoBehaviour, iDamage
             if (agent.remainingDistance < agent.stoppingDistance)
                 facePlayer();
 
-            if (!isShooting)
-                StartCoroutine(attack());
+            if (!isBiting)
+                StartCoroutine(bite());
         }
-        else if(agent.remainingDistance < 0.1 && agent.destination != gameManager.instance.player.transform.position)
+        else if (agent.remainingDistance < 0.1 && agent.destination != gameManager.instance.player.transform.position)
         {
             roam();
         }
@@ -85,7 +89,7 @@ public class enemyAi : MonoBehaviour, iDamage
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(eyes.transform.position, playerDir, out hit, sightDis))
+        if (Physics.Raycast(mouth.transform.position, playerDir, out hit, sightDis))
         {
             if (hit.collider.CompareTag("Player") && angle <= viewAngle)
             {
@@ -126,16 +130,25 @@ public class enemyAi : MonoBehaviour, iDamage
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.CompareTag("Player"))
-            playerInRange= false;
+        if (other.CompareTag("Player"))
+            playerInRange = false;
     }
 
-    public virtual IEnumerator attack()
+    IEnumerator bite()
     {
-        isShooting = true;
-        Instantiate(bullet, eyes.transform.position, transform.rotation);
-        yield return new WaitForSeconds(attackRate);
-        isShooting = false;
+        isBiting = true;
+
+        RaycastHit hit;
+        if(Physics.Raycast(mouth.transform.position, mouth.transform.forward, out hit, biteRange))
+        {
+            if(hit.transform.tag == "Player")
+            {
+                gameManager.instance.playerScript.takeDamage(biteDamage);
+            }
+        }
+
+        yield return new WaitForSeconds(biteRate);
+        isBiting = false;
     }
 
     IEnumerator flashDamage()
