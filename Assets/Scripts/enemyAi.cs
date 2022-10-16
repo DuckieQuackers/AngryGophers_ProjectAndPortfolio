@@ -10,6 +10,7 @@ public class enemyAi : MonoBehaviour, iDamage
     [SerializeField] Renderer model;
     [SerializeField] GameObject bullet;
     [SerializeField] AudioSource aud;
+    [SerializeField] Animator anim;
     public GameObject eyes;
 
     [Header("----- Enemy combat -----")]
@@ -63,10 +64,12 @@ public class enemyAi : MonoBehaviour, iDamage
         if (playerInRange || lineOfSight)
         {
             if (!agro)
+            {
                 aud.PlayOneShot(agroAud, agroVol);
+                agent.speed = speedChase;
+            }
 
             agro = true;
-            agent.speed = speedChase;
             agent.stoppingDistance = stoppingDis;
 
             agent.SetDestination(gameManager.instance.player.transform.position);
@@ -163,11 +166,13 @@ public class enemyAi : MonoBehaviour, iDamage
     IEnumerator flashDamage()
     {
         model.material.color = Color.red;
+        float returnSpeed = agent.speed;
         agent.speed = 0;
 
-        yield return new WaitForSeconds(0.2f);
+        anim.SetTrigger("Hurt");
+        yield return new WaitForSeconds(.5f);
 
         model.material.color = Color.white;
-        agent.speed = speedOriginal;
+        agent.speed = returnSpeed;
     }
 }
