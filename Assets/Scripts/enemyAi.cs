@@ -9,6 +9,7 @@ public class enemyAi : MonoBehaviour, iDamage
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
     [SerializeField] GameObject bullet;
+    [SerializeField] AudioSource aud;
     public GameObject eyes;
 
     [Header("----- Enemy combat -----")]
@@ -22,11 +23,21 @@ public class enemyAi : MonoBehaviour, iDamage
     [Range(1, 10)] [SerializeField] int speedChase;
     [Range(0,10)] [SerializeField] int roamDis;
 
+    [Header("----- Audio -----")]
+    [SerializeField] AudioClip hurtAud;
+    [Range(0, 5)] [SerializeField] float hurtVol;
+    [SerializeField] AudioClip agroAud;
+    [Range(0, 5)] [SerializeField] float agroVol;
+    [SerializeField] AudioClip shootAud;
+    [Range (0, 5)] [SerializeField] float shootVol;
+
+    bool agro;
     bool playerInRange;
     bool lineOfSight;
     bool isShooting;
     float angle;
     float speedOriginal;
+    float stoppingDis;
     Vector3 playerDir;
     Vector3 origin;
 
@@ -36,6 +47,7 @@ public class enemyAi : MonoBehaviour, iDamage
         gameManager.instance.enemySpawn();
         origin = transform.position;
         speedOriginal = agent.speed;
+        stoppingDis = agent.stoppingDistance;
         roam();
     }
 
@@ -50,7 +62,12 @@ public class enemyAi : MonoBehaviour, iDamage
 
         if (playerInRange || lineOfSight)
         {
+            if (!agro)
+                aud.PlayOneShot(agroAud, agroVol);
+
+            agro = true;
             agent.speed = speedChase;
+            agent.stoppingDistance = stoppingDis;
 
             agent.SetDestination(gameManager.instance.player.transform.position);
 
@@ -62,6 +79,7 @@ public class enemyAi : MonoBehaviour, iDamage
         }
         else if(agent.remainingDistance < 0.1 && agent.destination != gameManager.instance.player.transform.position)
         {
+            agro = false;
             roam();
         }
     }
@@ -109,7 +127,9 @@ public class enemyAi : MonoBehaviour, iDamage
     {
         hp -= dmg;
         agent.SetDestination(gameManager.instance.player.transform.position);
+
         StartCoroutine(flashDamage());
+        aud.PlayOneShot(hurtAud, hurtVol);
 
         if (hp <= 0)
         {
@@ -134,6 +154,8 @@ public class enemyAi : MonoBehaviour, iDamage
     {
         isShooting = true;
         Instantiate(bullet, eyes.transform.position, transform.rotation);
+        aud.PlayOneShot(shootAud, shootVol);
+
         yield return new WaitForSeconds(attackRate);
         isShooting = false;
     }
