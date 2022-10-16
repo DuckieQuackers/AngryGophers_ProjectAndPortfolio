@@ -405,18 +405,23 @@ MonoBehaviour:
   anim: {fileID: 1475608388144994562}
   eyes: {fileID: 2638282331955735943}
   hp: 5
-  attackRate: 0.5
+  attackRate: 0.75
   facePlayerSpeed: 4
   sightDis: 30
   viewAngle: 45
   speedChase: 5
-  roamDis: 5
+  roamDis: 8
+  animLerp: 5
   hurtAud: {fileID: 8300000, guid: 0c0aa03285a1d544eb0c1684df297495, type: 3}
   hurtVol: 1
   agroAud: {fileID: 8300000, guid: fdc0f31f4aa4d4c47abc738eb05bfe76, type: 3}
-  agroVol: 5
+  agroVol: 1
   shootAud: {fileID: 8300000, guid: cf5780486f72bb847acc52e5d7a99279, type: 3}
-  shootVol: 2.5
+  shootVol: 1
+  deathAud: {fileID: 8300000, guid: f90f50096a59e574dadeecbb179e5052, type: 3}
+  deathVol: 1
+  scuttleAud: {fileID: 8300000, guid: 4d5a1bfecd53b504282e93bffb905ab7, type: 3}
+  scuttleVol: 1
 --- !u!195 &1782022282931283487
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -427,7 +432,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 2.5
-  m_Speed: 3
+  m_Speed: 2.5
   m_Acceleration: 40
   avoidancePriority: 50
   m_AngularSpeed: 600
