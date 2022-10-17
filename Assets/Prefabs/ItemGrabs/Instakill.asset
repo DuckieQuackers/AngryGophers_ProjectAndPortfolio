@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97da6d25aae31a448ae5979aeba99ae1, type: 3}
-  m_Name: Instant Kill
+  m_Name: Instakill
   m_EditorClassIdentifier: 
   fireRate: 0
   fireDistance: 0
