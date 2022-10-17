@@ -17,6 +17,6 @@ MonoBehaviour:
   damage: 5
   ammoCount: 6
   designModel: {fileID: 919132149155446097, guid: 4df3ce82db8e66645afd54ab1d5b0262, type: 3}
-  triggerSound: {fileID: 0}
+  triggerSound: {fileID: 8300000, guid: 813e058842af4a1439d878a5247594af, type: 3}
   hitEffect: {fileID: 0}
   triggerEffect: {fileID: 0}
