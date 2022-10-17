@@ -16,7 +16,7 @@ MonoBehaviour:
   fireDistance: 0
   damage: 0
   ammoCount: 0
-  addSpeed: 10
+  addSpeed: 1
   addJumps: 0
   addHealth: 0
   addStamina: 0
