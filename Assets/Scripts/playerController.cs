@@ -16,6 +16,8 @@ public class playerController : MonoBehaviour, iDamage
     [SerializeField] float playerSpeed;
     [SerializeField] float jumpHeight;
     [SerializeField] float gravityModifier;
+    [SerializeField] float stamina;
+    [SerializeField] float currentStamina;
 
     [SerializeField] int jumpsMax;
     private int jumpCount;
@@ -61,6 +63,7 @@ public class playerController : MonoBehaviour, iDamage
     {
         HPOrig = HP;
         respawn();
+        currentStamina = stamina;
     }
 
     // Update is called once per frame
@@ -104,16 +107,29 @@ public class playerController : MonoBehaviour, iDamage
         }
         //Player Movement and Sprint
         move = (transform.right * Input.GetAxis("Horizontal") + (transform.forward * Input.GetAxis("Vertical")));
-        if (Input.GetButton("Sprint"))
+        if (Input.GetButton("Sprint") && currentStamina!=0)
         {
             playerSprinting = true;
-            controller.Move(move * Time.deltaTime * (sprintSpeed + playerSpeed));
+            if (playerSprinting)
+            {
+                controller.Move(move * Time.deltaTime * (sprintSpeed + playerSpeed));
+                currentStamina--;
+            }
+           
+        }
+        else if(currentStamina == 0)
+        {
+            playerSprinting = false;
+            controller.Move(move * Time.deltaTime * playerSpeed);
+            StartCoroutine(sprintCooldown());
         }
         else
         {
             playerSprinting = false;
             controller.Move(move * Time.deltaTime * playerSpeed);
+
         }
+       
 
 
         controller.Move(playerVelocity * Time.deltaTime);
@@ -313,5 +329,17 @@ public class playerController : MonoBehaviour, iDamage
         UpdatePlayerHud();
         transform.position = gameManager.instance.spawnPosition.transform.position;
         controller.enabled = true;
+    }
+    IEnumerator sprintCooldown()
+    {
+        yield return new WaitForSeconds(5f);
+        if (currentStamina != stamina)
+        {
+            currentStamina += stamina;
+            if(currentStamina > stamina)
+            {
+                currentStamina = stamina;
+            }
+        }
     }
 }
