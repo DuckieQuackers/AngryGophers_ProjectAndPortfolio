@@ -16,6 +16,10 @@ MonoBehaviour:
   fireDistance: 100
   damage: 8
   ammoCount: 30
+  chamber: 1
+  reloadCount: 30
+  reloadTime: 6
+  maxAmmo: 200
   designModel: {fileID: 919132149155446097, guid: 33269b2b610f4c245a712795c1927939, type: 3}
   triggerSound: {fileID: 0}
   hitEffect: {fileID: 0}
