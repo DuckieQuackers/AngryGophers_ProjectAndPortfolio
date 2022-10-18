@@ -33,7 +33,6 @@ public class enemyAi : MonoBehaviour, iDamage
     // Start is called before the first frame update
     void Start()
     {
-        gameManager.instance.enemySpawn();
         origin = transform.position;
         speedOriginal = agent.speed;
         roam();
