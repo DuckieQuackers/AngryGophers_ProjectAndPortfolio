@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class playerController : MonoBehaviour, iDamage
 {
+    [Header("---PowerUp Modifer---")]
+    [SerializeField] float shootRateUp;
+    [SerializeField] int shootDamageUp;
+    [SerializeField] int shootDistanceUp;
     [Header("----Player Stats----")]
     [SerializeField] int HP;
     [SerializeField] int ammoHeld;
@@ -46,6 +50,10 @@ public class playerController : MonoBehaviour, iDamage
     public bool playingMoveAudio;
     public bool playerSprinting;
     public bool grabbedPickup;
+    public bool isFireRateUp;
+    public bool isDamageUp;
+    public bool isRangeUp;
+    public bool isShootDistanceUp;
     [SerializeField] int selectedGun;
     private int nextJump;
 
@@ -179,7 +187,7 @@ public class playerController : MonoBehaviour, iDamage
     public void itemPickup(itemGrabs item)
     {
         grabbedPickup = true;
-        shootRate = shootRate/item.fireRate;
+        //shootRate = shootRate/item.fireRate;
         shootDist += item.fireDistance;
         shootDmg += item.damage;
         jumpsMax += item.addJumps;
@@ -203,14 +211,47 @@ public class playerController : MonoBehaviour, iDamage
 
     IEnumerator coolDown(itemGrabs item)
     {
+      if(item.fireRate == 1)
+        {
+            isFireRateUp = true;
+            shootRate /= shootRateUp;
+            yield return new WaitForSeconds(10.00f);
+            isFireRateUp = false;
+            shootRate *= shootRateUp;
+            grabbedPickup = false;
+        }
+      else if(item.damage == 1)
+        {
+            isDamageUp = true;
+            shootDmg += shootDamageUp;
+            yield return new WaitForSeconds(10.00f);
+            shootDmg -= shootDamageUp;
+            grabbedPickup = false;
+            isDamageUp = false;
+
+        }
+      else if(item.fireDistance == 1)
+        {
+            isShootDistanceUp = true;
+            shootDist += shootDistanceUp;
+            yield return new WaitForSeconds(10.00f);
+            shootDist -= shootDistanceUp;
+            grabbedPickup = false;
+            isShootDistanceUp = false;
+
+        }
+        else
+        {
+            yield return new WaitForSeconds(10.00f);
+            //shootRate = shootRate*item.fireRate;
+            shootDist -= item.fireDistance;
+            shootDmg -= item.damage;
+            jumpsMax -= item.addJumps;
+            sprintSpeed -= item.addSpeed;
+            grabbedPickup = false;
+
+        }
         
-        yield return new WaitForSeconds(10.00f);
-        shootRate = shootRate*item.fireRate;
-        shootDist -= item.fireDistance;
-        shootDmg -= item.damage;
-        jumpsMax -= item.addJumps;
-        sprintSpeed -= item.addSpeed;
-        grabbedPickup = false;
     }
 
     public void gunSelection()
@@ -236,9 +277,26 @@ public class playerController : MonoBehaviour, iDamage
 
     public void weaponSwap()
     {
-        shootRate = weaponListStats[selectedGun].fireRate;
-        shootDist = weaponListStats[selectedGun].fireDistance;
-        shootDmg = weaponListStats[selectedGun].damage;
+        if (isFireRateUp)
+        {
+            shootRate = weaponListStats[selectedGun].fireRate / shootRateUp;
+        }
+        else if (isDamageUp)
+        {
+            shootDmg = weaponListStats[selectedGun].damage + shootDamageUp;
+        }
+        else if (isShootDistanceUp)
+        {
+            shootDist = weaponListStats[selectedGun].fireDistance + shootDistanceUp;
+        }
+        else
+        {
+            shootRate = weaponListStats[selectedGun].fireRate;
+            shootDist = weaponListStats[selectedGun].fireDistance;
+            shootDmg = weaponListStats[selectedGun].damage;
+
+        }
+       
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = weaponListStats[selectedGun].designModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = weaponListStats[selectedGun].designModel.GetComponent<MeshRenderer>().sharedMaterial;
