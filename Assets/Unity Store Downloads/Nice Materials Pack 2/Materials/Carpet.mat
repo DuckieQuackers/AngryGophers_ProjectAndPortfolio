@@ -102,6 +102,6 @@ Material:
     - _node_3978: 0
     - _node_7910: 0
     m_Colors:
-    - _Color: {r: 0.8018868, g: 0.75502986, b: 0.69143826, a: 1}
+    - _Color: {r: 0.8784314, g: 0.80784315, b: 0.7137255, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
