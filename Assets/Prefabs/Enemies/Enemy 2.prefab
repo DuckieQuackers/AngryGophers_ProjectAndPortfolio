@@ -90,6 +90,8 @@ MonoBehaviour:
   aud: {fileID: 78197080442903233}
   anim: {fileID: 996603958437358013}
   eyes: {fileID: 7593075787137433125}
+  drop: {fileID: 0}
+  shade: {r: 1, g: 1, b: 1, a: 1}
   hp: 5
   attackRate: 1
   facePlayerSpeed: 5
