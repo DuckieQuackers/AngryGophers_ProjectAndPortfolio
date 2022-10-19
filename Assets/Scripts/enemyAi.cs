@@ -75,9 +75,9 @@ public class enemyAi : MonoBehaviour, iDamage
                 {
                     aud.PlayOneShot(agroAud, agroVol);
                     agent.speed = speedChase;
+                    agro = true;
                 }
 
-                agro = true;
                 agent.stoppingDistance = stoppingDis;
 
                 agent.SetDestination(gameManager.instance.player.transform.position);
