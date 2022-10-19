@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/BasicSpawner1.prefab.meta
 guid: 5b8d19d83d943c047b0d18d84f6ecffa
+========
+guid: d1bfca63e5c8e7d44b5ca5bac43c037a
+>>>>>>>> a84c8b9c2392c7015bad8480b2fd967b7cb49511:Assets/Prefabs/Enemy 1.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 
