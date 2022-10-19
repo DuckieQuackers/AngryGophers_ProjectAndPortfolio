@@ -20,7 +20,7 @@ MonoBehaviour:
   reloadCount: 12
   reloadTime: 3
   maxAmmo: 60
-  designModel: {fileID: 919132149155446097, guid: 8f9696fb6017be144a307b6586855ac0, type: 3}
+  designModel: {fileID: 919132149155446097, guid: 726e329e1719c8f42949342e6a5b42e3, type: 3}
   triggerSound: {fileID: 8300000, guid: cc02a7ff7a59dd8479404333175c8aa6, type: 3}
   hitEffect: {fileID: 0}
   triggerEffect: {fileID: 0}

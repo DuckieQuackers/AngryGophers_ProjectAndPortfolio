@@ -213,7 +213,6 @@ public class playerController : MonoBehaviour, iDamage
     {
         shootRate = stats.fireRate;
         shootDist = stats.fireDistance;
-        shootDmg = stats.damage * chamber;
         chamber = stats.chamber;
         gameManager.instance.currentAmmo = stats.ammoCount;
         gameManager.instance.maximumAmmo = stats.maxAmmo;
