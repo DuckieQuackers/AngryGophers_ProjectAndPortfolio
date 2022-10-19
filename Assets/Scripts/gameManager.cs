@@ -77,7 +77,7 @@ public class gameManager : MonoBehaviour
     public void checkEnemyTotal()
     {
         enemyNumber--;
-        updateCountText();
+        updateGameGoal();
 
         if (enemyNumber <= 0)
         {
@@ -86,17 +86,9 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    public void enemySpawn()
-    {
-        enemyNumber++;
-        updateCountText();
-    }
-
-    void updateCountText()
+    public void updateGameGoal()
     {
 
         enemyCountText.text = "Enemies left: " + enemyNumber.ToString("F0");
     }
 }
-
-
