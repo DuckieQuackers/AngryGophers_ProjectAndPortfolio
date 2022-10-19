@@ -196,7 +196,7 @@ public class enemyAi : MonoBehaviour, iDamage
         anim.SetTrigger("Hurt");
         yield return new WaitForSeconds(.6f);
 
-        model.material.color = Color.white;
+        model.material.color = shade;
         agent.speed = returnSpeed;
         canShoot = true;
     }

@@ -11,6 +11,8 @@ public class playerController : MonoBehaviour, iDamage
     [SerializeField] float playerSpeed;
     [SerializeField] float jumpHeight;
     [SerializeField] float gravityModifier;
+    [SerializeField] int poisonDmg;
+    [SerializeField] float dotTickRate;
     //stamina required
 
     [SerializeField] int jumpsMax;
@@ -54,6 +56,7 @@ public class playerController : MonoBehaviour, iDamage
     public bool grabbedPickup;
     [SerializeField] int selectedGun;
     private int nextJump;
+    List<int> poisonStack = new List<int>();
 
     private void Start()
     {
@@ -321,5 +324,31 @@ public class playerController : MonoBehaviour, iDamage
         UpdatePlayerHud();
         transform.position = gameManager.instance.spawnPosition.transform.position;
         controller.enabled = true;
+    }
+
+    public void startDoT(int ticks)
+    {
+        if(poisonStack.Count <= 0)
+        {
+            poisonStack.Add(ticks);
+            StartCoroutine(DoT());
+        }
+        else
+            poisonStack.Add(ticks);
+    }
+
+    IEnumerator DoT()
+    {
+        while (poisonStack.Count > 0)
+        {
+            for(int i = 0; i < poisonStack.Count; i++)
+            {
+                poisonStack[i]--;
+            }
+            takeDamage(poisonDmg);
+            poisonStack.RemoveAll(i => i == 0);
+
+            yield return new WaitForSeconds(dotTickRate);
+        }
     }
 }
