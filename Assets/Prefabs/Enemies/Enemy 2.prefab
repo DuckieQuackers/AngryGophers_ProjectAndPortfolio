@@ -109,7 +109,7 @@ MonoBehaviour:
   scuttleAud: {fileID: 0}
   scuttleVol: 1
   biteDamage: 1
-  biteRange: 1
+  biteRange: 3
 --- !u!195 &78197080442903234
 NavMeshAgent:
   m_ObjectHideFlags: 0

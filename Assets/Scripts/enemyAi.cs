@@ -146,7 +146,7 @@ public class enemyAi : MonoBehaviour, iDamage
             agent.enabled = false;
 
             Destroy(gameObject, 10);
-            gameManager.instance.checkEnemyTotal();
+            //gameManager.instance.checkEnemyTotal();
         }
         else
         {
