@@ -215,8 +215,8 @@ public class playerController : MonoBehaviour, iDamage
         shootDist = stats.fireDistance;
         shootDmg = stats.damage * chamber;
         chamber = stats.chamber;
-        currentAmmo = stats.ammoCount;
-        maxAmmo = stats.maxAmmo;
+        gameManager.instance.currentAmmo = stats.ammoCount;
+        gameManager.instance.maximumAmmo = stats.maxAmmo;
         reloadCount = stats.reloadCount;
         reloadTime = stats.reloadTime;
         gunFireSound = stats.triggerSound;
@@ -287,8 +287,8 @@ public class playerController : MonoBehaviour, iDamage
         shootDist = weaponListStats[selectedGun].fireDistance;
         chamber = weaponListStats[selectedGun].chamber;
         shootDmg = weaponListStats[selectedGun].damage * chamber;
-        currentAmmo = weaponListStats[selectedGun].ammoCount;
-        maxAmmo = weaponListStats[selectedGun].maxAmmo;
+        gameManager.instance.currentAmmo = weaponListStats[selectedGun].ammoCount;
+        gameManager.instance.maximumAmmo = weaponListStats[selectedGun].maxAmmo;
         reloadCount = weaponListStats[selectedGun].reloadCount;
         reloadTime = weaponListStats[selectedGun].reloadTime;
         gunFireSound = weaponListStats[selectedGun].triggerSound;
