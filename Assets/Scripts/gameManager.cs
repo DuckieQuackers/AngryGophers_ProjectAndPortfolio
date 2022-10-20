@@ -26,6 +26,7 @@ public class gameManager : MonoBehaviour
     public Image playerHPBar;
     public TextMeshProUGUI enemyCountText;
     public TextMeshProUGUI ammoTracker;
+    public Image staminaDrain;
 
     public bool isPaused;
 

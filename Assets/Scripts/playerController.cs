@@ -82,6 +82,7 @@ public class playerController : MonoBehaviour, iDamage
         currentStamina = stamina;
 
         gameManager.instance.updateAmmoCount(0, 0);
+        UpdatePlayerHud();
         respawn();
     }
 
@@ -123,11 +124,12 @@ public class playerController : MonoBehaviour, iDamage
             {
                 if (hit.collider.GetComponent<iDamage>() != null)
                     hit.collider.GetComponent<iDamage>().takeDamage(shootDmg);
+                
             }
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
         }
-
+        
     }
     IEnumerator reloadWeapon(RangedWeapons stats)
     {
@@ -169,6 +171,7 @@ public class playerController : MonoBehaviour, iDamage
             playerSprinting = true;
             //remove stamina here
             currentStamina--;
+            UpdatePlayerHud();
             controller.Move(move * Time.deltaTime * (sprintSpeed + playerSpeed));
         }
         else
@@ -237,6 +240,7 @@ public class playerController : MonoBehaviour, iDamage
             playerVelocity.y = jumpHeight;
             //remove stamina here
             currentStamina--;
+            UpdatePlayerHud();
         }
         playerVelocity.y -= gravityModifier * Time.deltaTime;
     }
@@ -259,7 +263,10 @@ public class playerController : MonoBehaviour, iDamage
     public void itemPickup(itemGrabs item)
     {
         grabbedPickup = true;
-        shootRate = shootRate / item.fireRate;
+        if(item.fireRate > 0)
+        {
+            shootRate = shootRate / item.fireRate;
+        }
         shootDist += item.fireDistance;
         shootDmg += item.damage;
         jumpsMax += item.addJumps;
@@ -279,6 +286,7 @@ public class playerController : MonoBehaviour, iDamage
                 HP = HPOrig;
             }
         }
+        grabbedPickup = false;
     }
     IEnumerator coolDown(itemGrabs item)
     {
@@ -343,6 +351,7 @@ public class playerController : MonoBehaviour, iDamage
     public void UpdatePlayerHud()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / (float)HPOrig;
+        gameManager.instance.staminaDrain.fillAmount = currentStamina / stamina;
         //add current ammo/ max ammo update
         //add stamina update
     }
@@ -366,6 +375,7 @@ public class playerController : MonoBehaviour, iDamage
         onCooldown = true;
         yield return new WaitForSeconds(1f);
         currentStamina = stamina;
+        UpdatePlayerHud();
         onCooldown = false;
 
            

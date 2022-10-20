@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cbb1831c6b016c4eb4a2f0f6ed65aab, type: 3}
   m_Name: Semi-Auto
   m_EditorClassIdentifier: 
-  fireRate: 0.5
+  fireRate: 0.75
   fireDistance: 30
   damage: 3
   ammoCount: 12
   chamber: 1
   reloadTime: 3
   maxAmmo: 60
-  trackedAmmo: 7
+  trackedAmmo: 5
   trackedMaxAmmo: 60
   designModel: {fileID: 919132149155446097, guid: 726e329e1719c8f42949342e6a5b42e3, type: 3}
   triggerSound: {fileID: 8300000, guid: 0a638d1224ee12c47974bedbe2e97f34, type: 3}

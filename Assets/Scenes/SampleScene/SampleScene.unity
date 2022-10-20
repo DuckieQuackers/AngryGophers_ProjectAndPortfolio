@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4366919, g: 0.48429096, b: 0.56453973, a: 1}
+  m_IndirectSpecularColor: {r: 0.43669215, g: 0.48429126, b: 0.5645402, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -261,6 +261,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1997ff74d1599ac439a3e55d76c53bfd, type: 3}
+--- !u!114 &272645371 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2361033929517796033, guid: 59ba2751dc3cd244aa697d723825025d, type: 3}
+  m_PrefabInstance: {fileID: 7378591580700144031}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &358769582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -339,7 +350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9171844736707852552, guid: 3eb8342953eb45940b3bf7d3d396abbf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 62.965256
+      value: 21.5
       objectReference: {fileID: 0}
     - target: {fileID: 9171844736707852552, guid: 3eb8342953eb45940b3bf7d3d396abbf, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1686,6 +1697,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6495032185901038213, guid: 7e54c4ca36264274da28d42cf042155c, type: 3}
+      propertyPath: stamina
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 6495032185901038213, guid: 7e54c4ca36264274da28d42cf042155c, type: 3}
+      propertyPath: currentStamina
+      value: 300
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e54c4ca36264274da28d42cf042155c, type: 3}
 --- !u!1001 &7378591580700144031
@@ -1815,6 +1834,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 7378591579985855844, guid: 59ba2751dc3cd244aa697d723825025d, type: 3}
+      propertyPath: staminaDrain
+      value: 
+      objectReference: {fileID: 272645371}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59ba2751dc3cd244aa697d723825025d, type: 3}
 --- !u!1001 &8086115691954959138
