@@ -8,10 +8,12 @@ public class enemyAi : MonoBehaviour, iDamage
     [Header ("----- Components -----")]
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
-    [SerializeField] GameObject bullet;
+    [SerializeField] protected GameObject bullet;
     [SerializeField] protected AudioSource aud;
     [SerializeField] Animator anim;
     [SerializeField] protected GameObject eyes;
+    [SerializeField] GameObject drop;
+    [SerializeField] Color shade;
 
     [Header("----- Enemy combat -----")]
     [Range(1, 50)][SerializeField] int hp;
@@ -54,6 +56,7 @@ public class enemyAi : MonoBehaviour, iDamage
         origin = transform.position;
         speedOriginal = agent.speed;
         stoppingDis = agent.stoppingDistance;
+        model.material.color = shade;
         roam();
     }
 
@@ -145,6 +148,9 @@ public class enemyAi : MonoBehaviour, iDamage
             aud.PlayOneShot(deathAud, deathVol);
             agent.enabled = false;
 
+            if(drop != null)
+                Instantiate(drop, transform.position, transform.rotation);
+
             Destroy(gameObject, 10);
             //gameManager.instance.checkEnemyTotal();
         }
@@ -190,7 +196,7 @@ public class enemyAi : MonoBehaviour, iDamage
         anim.SetTrigger("Hurt");
         yield return new WaitForSeconds(.6f);
 
-        model.material.color = Color.white;
+        model.material.color = shade;
         agent.speed = returnSpeed;
         canShoot = true;
     }
