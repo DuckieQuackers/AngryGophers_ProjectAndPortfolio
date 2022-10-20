@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 1
   fireDistance: 30
-  damage: 3
-  ammoCount: 12
+  damage: 5
+  ammoCount: 8
   chamber: 1
   reloadTime: 2
   maxAmmo: 60
-  trackedAmmo: 10
-  trackedMaxAmmo: 36
+  trackedAmmo: 12
+  trackedMaxAmmo: 60
   designModel: {fileID: 919132149155446097, guid: 8f9696fb6017be144a307b6586855ac0, type: 3}
   triggerSound: {fileID: 8300000, guid: 5aec0e63c3057ef4c812f96080e13f99, type: 3}
   hitEffect: {fileID: 0}

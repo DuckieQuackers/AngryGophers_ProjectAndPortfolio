@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cbb1831c6b016c4eb4a2f0f6ed65aab, type: 3}
   m_Name: Revolver
   m_EditorClassIdentifier: 
-  fireRate: 1.5
+  fireRate: 2
   fireDistance: 30
-  damage: 5
+  damage: 10
   ammoCount: 6
   chamber: 1
   reloadTime: 6
