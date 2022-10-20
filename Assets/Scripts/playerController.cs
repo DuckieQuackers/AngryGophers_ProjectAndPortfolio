@@ -68,6 +68,7 @@ public class playerController : MonoBehaviour, iDamage
     public bool playingMoveAudio;
     public bool playerSprinting;
     public bool grabbedPickup;
+    public bool onCooldown;
     [SerializeField] public int selectedGun;
     private int nextJump;
     List<int> poisonStack = new List<int>();
@@ -167,7 +168,7 @@ public class playerController : MonoBehaviour, iDamage
         {
             playerSprinting = false;
             controller.Move(move * Time.deltaTime * playerSpeed);
-            if(currentStamina <= 0)
+            if(currentStamina <= 0 && !onCooldown)
             {
                 StartCoroutine(sprintCooldown());
             }
@@ -353,16 +354,14 @@ public class playerController : MonoBehaviour, iDamage
 
     IEnumerator sprintCooldown()
     {
+        onCooldown = true;
         yield return new WaitForSeconds(5f);
-        if (currentStamina != stamina)
-        {
-            currentStamina += stamina;
-            if (currentStamina > stamina)
-            {
-                currentStamina = stamina;
-            }
+        currentStamina = stamina;
+        onCooldown = false;
 
-        }
+           
+
+        
     }
     public void startDoT(int ticks)
     {
