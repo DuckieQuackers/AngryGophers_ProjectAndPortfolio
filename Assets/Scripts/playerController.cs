@@ -79,6 +79,7 @@ public class playerController : MonoBehaviour, iDamage
         currentStamina = stamina;
 
         gameManager.instance.updateAmmoCount(0, 0);
+        UpdatePlayerHud();
         respawn();
     }
 
@@ -99,6 +100,7 @@ public class playerController : MonoBehaviour, iDamage
                 if (Input.GetButton("Fire1") && !isShooting)
                 {
                     StartCoroutine(shoot(weaponListStats[selectedGun]));
+                    isShooting = false;
                 }
             }
             else if (weaponListStats[selectedGun].trackedAmmo <= 0 || Input.GetButtonDown("Reload") && weaponListStats[selectedGun].trackedAmmo != weaponListStats[selectedGun].ammoCount)
@@ -106,7 +108,6 @@ public class playerController : MonoBehaviour, iDamage
                 StartCoroutine(reloadWeapon(weaponListStats[selectedGun]));
             }
         }
-        
         gunSelection();
     }
     IEnumerator shoot(RangedWeapons currentGun)
@@ -162,6 +163,7 @@ public class playerController : MonoBehaviour, iDamage
             playerSprinting = true;
             //remove stamina here
             currentStamina--;
+            UpdatePlayerHud();
             controller.Move(move * Time.deltaTime * (sprintSpeed + playerSpeed));
         }
         else
@@ -227,6 +229,7 @@ public class playerController : MonoBehaviour, iDamage
             playerVelocity.y = jumpHeight;
             //remove stamina here
             currentStamina--;
+            UpdatePlayerHud();
         }
         playerVelocity.y -= gravityModifier * Time.deltaTime;
     }
@@ -334,6 +337,7 @@ public class playerController : MonoBehaviour, iDamage
     public void UpdatePlayerHud()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / (float)HPOrig;
+        gameManager.instance.staminaDrain.fillAmount = (float)currentStamina / (float)stamina;
         //add current ammo/ max ammo update
         //add stamina update
     }
@@ -357,6 +361,7 @@ public class playerController : MonoBehaviour, iDamage
         onCooldown = true;
         yield return new WaitForSeconds(5f);
         currentStamina = stamina;
+        UpdatePlayerHud();
         onCooldown = false;
 
            
