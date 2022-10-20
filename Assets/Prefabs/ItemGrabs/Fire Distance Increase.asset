@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fire Distance Increase
   m_EditorClassIdentifier: 
   fireRate: 0
-  fireDistance: 500
+  fireDistance: 1
   damage: 0
   ammoCount: 0
   addSpeed: 0

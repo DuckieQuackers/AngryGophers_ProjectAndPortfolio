@@ -14,8 +14,7 @@ public class randomSpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager.instance.enemyNumber = maxEnemies;
-        gameManager.instance.updateGameGoal();
+
     }
 
     // Update is called once per frame

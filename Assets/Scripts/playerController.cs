@@ -1,9 +1,22 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class playerController : MonoBehaviour, iDamage
 {
+    [Header("---PowerUp Modifer---")]
+    [SerializeField] float shootRateUp;
+    [SerializeField] int shootDamageUp;
+    [SerializeField] int shootDistanceUp;
+    public bool isFireRateUp;
+    public bool isDamageUp;
+    public bool isRangeUp;
+    public bool isShootDistanceUp;
+
+
+
+
     [Header("----Player Stats----")]
     [SerializeField] int HP;
     [SerializeField] float sprintSpeed;
@@ -11,6 +24,8 @@ public class playerController : MonoBehaviour, iDamage
     [SerializeField] float playerSpeed;
     [SerializeField] float jumpHeight;
     [SerializeField] float gravityModifier;
+    [SerializeField] float stamina;
+    [SerializeField] float currentStamina;
     [SerializeField] int poisonDmg;
     [SerializeField] float dotTickRate;
     //stamina required
@@ -49,10 +64,11 @@ public class playerController : MonoBehaviour, iDamage
     private Vector3 playerVelocity;
     Vector3 move;
     public bool isShooting;
-    private bool isReloading =false;
+    private bool isReloading = false;
     public bool playingMoveAudio;
     public bool playerSprinting;
     public bool grabbedPickup;
+    public bool onCooldown;
     [SerializeField] public int selectedGun;
     private int nextJump;
     List<int> poisonStack = new List<int>();
@@ -60,6 +76,7 @@ public class playerController : MonoBehaviour, iDamage
     private void Start()
     {
         HPOrig = HP;
+        currentStamina = stamina;
 
         gameManager.instance.updateAmmoCount(0, 0);
         respawn();
@@ -140,16 +157,21 @@ public class playerController : MonoBehaviour, iDamage
         }
         //Player Movement and Sprint
         move = (transform.right * Input.GetAxis("Horizontal") + (transform.forward * Input.GetAxis("Vertical")));
-        if (Input.GetButton("Sprint"))
+        if (Input.GetButton("Sprint") && currentStamina!=0)
         {
             playerSprinting = true;
             //remove stamina here
+            currentStamina--;
             controller.Move(move * Time.deltaTime * (sprintSpeed + playerSpeed));
         }
         else
         {
             playerSprinting = false;
             controller.Move(move * Time.deltaTime * playerSpeed);
+            if(currentStamina <= 0 && !onCooldown)
+            {
+                StartCoroutine(sprintCooldown());
+            }
         }
 
 
@@ -193,7 +215,7 @@ public class playerController : MonoBehaviour, iDamage
     void jumping()
     {
         //jumping requires stamina check
-        if (Input.GetButtonDown("Jump") && jumpCount < jumpsMax)
+        if (Input.GetButtonDown("Jump") && jumpCount < jumpsMax && currentStamina!=0)
         {
             audioSource.PlayOneShot(playerJumps[nextJump], playerJumpsAudVolume);
             nextJump++;
@@ -204,11 +226,13 @@ public class playerController : MonoBehaviour, iDamage
             jumpCount++;
             playerVelocity.y = jumpHeight;
             //remove stamina here
+            currentStamina--;
         }
         playerVelocity.y -= gravityModifier * Time.deltaTime;
     }
     public void weaponPickup(RangedWeapons stats)
     {
+        shootDmg = stats.damage;
         shootRate = stats.fireRate;
         shootDist = stats.fireDistance;
         shootDmg = stats.damage;
@@ -259,7 +283,7 @@ public class playerController : MonoBehaviour, iDamage
     }
     public void gunSelection()
     {
-        if (weaponListStats.Count > 1)
+        if (weaponListStats.Count > 0)
         {
             if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < weaponListStats.Count - 1)
             {
@@ -275,12 +299,32 @@ public class playerController : MonoBehaviour, iDamage
     }
     public void weaponSwap()
     {
+        if (isFireRateUp)
+        {
+            shootRate = weaponListStats[selectedGun].fireRate / shootRateUp;
+        }
+        else if (isDamageUp)
+        {
+            shootDmg = weaponListStats[selectedGun].damage + shootDamageUp;
+        }
+        else if (isShootDistanceUp)
+        {
+            shootDist = weaponListStats[selectedGun].fireDistance + shootDistanceUp;
+        }
+        else
+        {
+            shootRate = weaponListStats[selectedGun].fireRate;
+            shootDist = weaponListStats[selectedGun].fireDistance;
+            shootDmg = weaponListStats[selectedGun].damage;
+            
+
+        }
         shootRate = weaponListStats[selectedGun].fireRate;
         shootDist = weaponListStats[selectedGun].fireDistance;
         chamber = weaponListStats[selectedGun].chamber;
         shootDmg = weaponListStats[selectedGun].damage * chamber;
-        gameManager.instance.currentAmmo = weaponListStats[selectedGun].ammoCount;
-        gameManager.instance.maximumAmmo = weaponListStats[selectedGun].maxAmmo;
+        weaponListStats[selectedGun].trackedAmmo = weaponListStats[selectedGun].ammoCount;
+        weaponListStats[selectedGun].trackedMaxAmmo = weaponListStats[selectedGun].maxAmmo;
         reloadTime = weaponListStats[selectedGun].reloadTime;
         gunFireSound = weaponListStats[selectedGun].triggerSound;
 
@@ -306,6 +350,18 @@ public class playerController : MonoBehaviour, iDamage
         
         transform.position = gameManager.instance.spawnPosition.transform.position;
         controller.enabled = true;
+    }
+
+    IEnumerator sprintCooldown()
+    {
+        onCooldown = true;
+        yield return new WaitForSeconds(5f);
+        currentStamina = stamina;
+        onCooldown = false;
+
+           
+
+        
     }
     public void startDoT(int ticks)
     {

@@ -6,19 +6,20 @@ using UnityEngine.AI;
 public class enemyAi : MonoBehaviour, iDamage
 {
     [Header ("----- Components -----")]
-    [SerializeField] NavMeshAgent agent;
+    [SerializeField] protected NavMeshAgent agent;
     [SerializeField] Renderer model;
     [SerializeField] protected GameObject bullet;
     [SerializeField] protected AudioSource aud;
-    [SerializeField] Animator anim;
+    [SerializeField] protected Animator anim;
     [SerializeField] protected GameObject eyes;
-    [SerializeField] GameObject drop;
+    [SerializeField] protected GameObject drop;
     [SerializeField] Color shade;
     [SerializeField] List<GameObject> dropPool;
-    [SerializeField] Collider hitBox;
+    [SerializeField] protected Collider hitBox;
 
     [Header("----- Enemy combat -----")]
-    [Range(1, 50)][SerializeField] int hp;
+    [Range(1, 50)][SerializeField] protected int hp;
+    [SerializeField] bool isImportant;
     [Range(.01f, 10)] [SerializeField] protected float attackRate;
 
     [Header("----- Movement/patrol stats -----")]
@@ -30,14 +31,14 @@ public class enemyAi : MonoBehaviour, iDamage
     [SerializeField] float animLerp;
 
     [Header("----- Audio -----")]
-    [SerializeField] AudioClip hurtAud;
-    [Range(0,1)] [SerializeField] float hurtVol;
+    [SerializeField] protected AudioClip hurtAud;
+    [Range(0,1)] [SerializeField] protected float hurtVol;
     [SerializeField] AudioClip agroAud;
     [Range(0,1)] [SerializeField] float agroVol;
     [SerializeField] protected AudioClip attackAud;
     [Range(0,1)] [SerializeField] protected float attackVol;
-    [SerializeField] AudioClip deathAud;
-    [Range(0,1)] [SerializeField] float deathVol;
+    [SerializeField] protected AudioClip deathAud;
+    [Range(0,1)] [SerializeField] protected float deathVol;
     [SerializeField] AudioClip scuttleAud;
     [Range(0,1)] [SerializeField] float scuttleVol;
 
@@ -55,6 +56,9 @@ public class enemyAi : MonoBehaviour, iDamage
     // Start is called before the first frame update
     void Start()
     {
+        if (isImportant)
+            gameManager.instance.enemySpawn();
+
         origin = transform.position;
         speedOriginal = agent.speed;
         stoppingDis = agent.stoppingDistance;
@@ -157,7 +161,9 @@ public class enemyAi : MonoBehaviour, iDamage
                 Instantiate(drop, transform.position, transform.rotation);
 
             Destroy(gameObject, 10);
-            //gameManager.instance.checkEnemyTotal();
+
+            if (isImportant)
+                gameManager.instance.checkEnemyTotal();
         }
         else
         {
@@ -191,7 +197,7 @@ public class enemyAi : MonoBehaviour, iDamage
         isAttacking = false;
     }
 
-    IEnumerator flashDamage()
+    protected IEnumerator flashDamage()
     {
         model.material.color = Color.red;
         float returnSpeed = agent.speed;

@@ -17,7 +17,6 @@ MonoBehaviour:
   damage: 3
   ammoCount: 12
   chamber: 1
-  reloadCount: 12
   reloadTime: 2
   maxAmmo: 60
   trackedAmmo: 0
