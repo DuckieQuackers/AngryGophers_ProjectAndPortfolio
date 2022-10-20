@@ -14,6 +14,8 @@ public class RangedWeapons : ScriptableObject
     public int reloadCount;
     public int reloadTime;
     public int maxAmmo;
+    public int trackedAmmo;
+    public int trackedMaxAmmo;
 
     //Components
     public GameObject designModel;

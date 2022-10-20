@@ -8,10 +8,12 @@ public class enemyAi : MonoBehaviour, iDamage
     [Header ("----- Components -----")]
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
-    [SerializeField] GameObject bullet;
-    [SerializeField] AudioSource aud;
+    [SerializeField] protected GameObject bullet;
+    [SerializeField] protected AudioSource aud;
     [SerializeField] Animator anim;
     [SerializeField] protected GameObject eyes;
+    [SerializeField] GameObject drop;
+    [SerializeField] Color shade;
 
     [Header("----- Enemy combat -----")]
     [Range(1, 50)][SerializeField] int hp;
@@ -30,8 +32,8 @@ public class enemyAi : MonoBehaviour, iDamage
     [Range(0,1)] [SerializeField] float hurtVol;
     [SerializeField] AudioClip agroAud;
     [Range(0,1)] [SerializeField] float agroVol;
-    [SerializeField] AudioClip shootAud;
-    [Range(0,1)] [SerializeField] float shootVol;
+    [SerializeField] protected AudioClip attackAud;
+    [Range(0,1)] [SerializeField] protected float attackVol;
     [SerializeField] AudioClip deathAud;
     [Range(0,1)] [SerializeField] float deathVol;
     [SerializeField] AudioClip scuttleAud;
@@ -54,6 +56,7 @@ public class enemyAi : MonoBehaviour, iDamage
         origin = transform.position;
         speedOriginal = agent.speed;
         stoppingDis = agent.stoppingDistance;
+        model.material.color = shade;
         roam();
     }
 
@@ -75,9 +78,9 @@ public class enemyAi : MonoBehaviour, iDamage
                 {
                     aud.PlayOneShot(agroAud, agroVol);
                     agent.speed = speedChase;
+                    agro = true;
                 }
 
-                agro = true;
                 agent.stoppingDistance = stoppingDis;
 
                 agent.SetDestination(gameManager.instance.player.transform.position);
@@ -145,8 +148,11 @@ public class enemyAi : MonoBehaviour, iDamage
             aud.PlayOneShot(deathAud, deathVol);
             agent.enabled = false;
 
+            if(drop != null)
+                Instantiate(drop, transform.position, transform.rotation);
+
             Destroy(gameObject, 10);
-            gameManager.instance.checkEnemyTotal();
+            //gameManager.instance.checkEnemyTotal();
         }
         else
         {
@@ -174,7 +180,7 @@ public class enemyAi : MonoBehaviour, iDamage
     {
         isAttacking = true;
         Instantiate(bullet, eyes.transform.position, transform.rotation);
-        aud.PlayOneShot(shootAud, shootVol);
+        aud.PlayOneShot(attackAud, attackVol);
 
         yield return new WaitForSeconds(attackRate);
         isAttacking = false;
@@ -190,7 +196,7 @@ public class enemyAi : MonoBehaviour, iDamage
         anim.SetTrigger("Hurt");
         yield return new WaitForSeconds(.6f);
 
-        model.material.color = Color.white;
+        model.material.color = shade;
         agent.speed = returnSpeed;
         canShoot = true;
     }

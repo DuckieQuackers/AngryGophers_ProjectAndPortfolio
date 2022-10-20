@@ -90,6 +90,8 @@ MonoBehaviour:
   aud: {fileID: 78197080442903233}
   anim: {fileID: 996603958437358013}
   eyes: {fileID: 7593075787137433125}
+  drop: {fileID: 0}
+  shade: {r: 1, g: 1, b: 1, a: 1}
   hp: 5
   attackRate: 1
   facePlayerSpeed: 5
@@ -98,18 +100,18 @@ MonoBehaviour:
   speedChase: 6
   roamDis: 4
   animLerp: 4
-  hurtAud: {fileID: 0}
+  hurtAud: {fileID: 8300000, guid: e6f7c5bd6c6d7924c8ad146a721c4bc9, type: 3}
   hurtVol: 1
-  agroAud: {fileID: 0}
-  agroVol: 0
-  shootAud: {fileID: 0}
-  shootVol: 1
-  deathAud: {fileID: 0}
-  deathVol: 0
+  agroAud: {fileID: 8300000, guid: 897dc14c3dc99a5478fa4e94264e86c5, type: 3}
+  agroVol: 1
+  attackAud: {fileID: 8300000, guid: c972aed19f2cf1a48bb2139fa0747f97, type: 3}
+  attackVol: 1
+  deathAud: {fileID: 8300000, guid: 9ef39992fee9edd4191d17371c191bcd, type: 3}
+  deathVol: 1
   scuttleAud: {fileID: 0}
-  scuttleVol: 0
+  scuttleVol: 1
   biteDamage: 1
-  biteRange: 1
+  biteRange: 3
 --- !u!195 &78197080442903234
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -124,7 +126,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 400
-  m_StoppingDistance: 4
+  m_StoppingDistance: 3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1

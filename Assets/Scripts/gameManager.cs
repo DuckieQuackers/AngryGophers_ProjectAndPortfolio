@@ -8,7 +8,8 @@ public class gameManager : MonoBehaviour
     public static gameManager instance;
 
     public int enemyNumber;
-
+    public int maximumAmmo;
+    public int currentAmmo;
     [Header("----- Player Stuff -----")]
     public GameObject player;
 
@@ -23,6 +24,7 @@ public class gameManager : MonoBehaviour
     public GameObject playerDamageFlash;
     public Image playerHPBar;
     public TextMeshProUGUI enemyCountText;
+    public TextMeshProUGUI ammoTracker;
 
     public bool isPaused;
 
@@ -33,6 +35,8 @@ public class gameManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<playerController>();
         spawnPosition = GameObject.FindGameObjectWithTag("Spawn Position");
+        currentAmmo = 0;
+        maximumAmmo = 0;
     }
 
     // Update is called once per frame
@@ -90,5 +94,12 @@ public class gameManager : MonoBehaviour
     {
 
         enemyCountText.text = "Enemies left: " + enemyNumber.ToString("F0");
+    }
+
+    public void updateAmmoCount()
+    {
+        currentAmmo = gameManager.instance.playerScript.weaponListStats[gameManager.instance.playerScript.selectedGun].trackedAmmo;
+        maximumAmmo = gameManager.instance.playerScript.weaponListStats[gameManager.instance.playerScript.selectedGun].trackedMaxAmmo;
+        ammoTracker.text = "Bullets: " + currentAmmo.ToString("F0") + "/ " + maximumAmmo.ToString("F0") + " Max Ammo";
     }
 }

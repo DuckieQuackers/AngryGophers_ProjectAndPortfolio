@@ -7,7 +7,7 @@ public class bullet : MonoBehaviour
     [SerializeField] Rigidbody rb;
 
     [SerializeField] int speed;
-    [SerializeField] int damage;
+    [SerializeField] protected int damage;
     [SerializeField] float lifeTime;
 
     void Start()
@@ -16,11 +16,10 @@ public class bullet : MonoBehaviour
         Destroy(gameObject, lifeTime);
     }
 
-    private void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            //Damage player once the code is set up
             gameManager.instance.playerScript.takeDamage(damage);
         }
 

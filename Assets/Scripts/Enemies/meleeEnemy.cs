@@ -9,7 +9,7 @@ public class meleeEnemy : enemyAi, iDamage
     [Range(1, 10)] [SerializeField] int biteDamage;
     [Range(1, 10)] [SerializeField] int biteRange;
 
-    IEnumerator bite()
+    public override IEnumerator attack()
     {
         isAttacking = true;
 
@@ -18,6 +18,7 @@ public class meleeEnemy : enemyAi, iDamage
         {
             if(hit.transform.tag == "Player")
             {
+                aud.PlayOneShot(attackAud, attackVol);
                 gameManager.instance.playerScript.takeDamage(biteDamage);
             }
         }
