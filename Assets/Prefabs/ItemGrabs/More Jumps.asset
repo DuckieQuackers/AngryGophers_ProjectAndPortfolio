@@ -17,7 +17,7 @@ MonoBehaviour:
   damage: 0
   ammoCount: 0
   addSpeed: 0
-  addJumps: 2
+  addJumps: 1
   addHealth: 0
   addStamina: 0
   designModel: {fileID: 0}
