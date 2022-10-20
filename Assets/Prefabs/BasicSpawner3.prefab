@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3699616709642968029}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BasicSpawner3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 2513161338217677801}
   - component: {fileID: 1852897364841356132}
   - component: {fileID: 5463493010144317713}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: SpawnTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
