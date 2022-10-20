@@ -96,10 +96,8 @@ public class gameManager : MonoBehaviour
         enemyCountText.text = "Enemies left: " + enemyNumber.ToString("F0");
     }
 
-    public void updateAmmoCount()
+    public void updateAmmoCount(int inMag, int inReserve)
     {
-        currentAmmo = gameManager.instance.playerScript.weaponListStats[gameManager.instance.playerScript.selectedGun].trackedAmmo;
-        maximumAmmo = gameManager.instance.playerScript.weaponListStats[gameManager.instance.playerScript.selectedGun].trackedMaxAmmo;
-        ammoTracker.text = "Bullets: " + currentAmmo.ToString("F0") + "/ " + maximumAmmo.ToString("F0") + " Max Ammo";
+        ammoTracker.text = "Bullets: " + inMag.ToString("F0") + "/ " + inReserve.ToString("F0");
     }
 }

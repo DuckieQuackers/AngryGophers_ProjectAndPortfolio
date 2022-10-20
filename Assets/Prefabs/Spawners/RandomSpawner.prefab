@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1690822811152549477
+--- !u!1 &191373029841979636
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,31 +8,31 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 43602335945542429}
-  m_Layer: 5
-  m_Name: UnderDresserSpiders
+  - component: {fileID: 7129472454900144432}
+  m_Layer: 0
+  m_Name: RandomSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &43602335945542429
+--- !u!4 &7129472454900144432
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1690822811152549477}
+  m_GameObject: {fileID: 191373029841979636}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 45.31, y: 2.72, z: -22.45}
-  m_LocalScale: {x: 0.23985, y: 0.23985, z: 0.23985}
+  m_LocalPosition: {x: 11.83, y: 1.62, z: 21.61}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1237873311174808361}
+  - {fileID: 3859156802706254547}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7282410561430282190
+--- !u!1 &7715648691138666769
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,56 +40,59 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1237873311174808361}
-  - component: {fileID: 3061204792246750116}
-  - component: {fileID: 1771045126533742373}
-  m_Layer: 5
+  - component: {fileID: 3859156802706254547}
+  - component: {fileID: 2727477536687145053}
+  - component: {fileID: 1271659951216413754}
+  m_Layer: 0
   m_Name: SpawnTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1237873311174808361
+--- !u!4 &3859156802706254547
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7282410561430282190}
+  m_GameObject: {fileID: 7715648691138666769}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -78.5, y: 3.22, z: -10.25}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 43602335945542429}
+  m_Father: {fileID: 7129472454900144432}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &3061204792246750116
-SphereCollider:
+--- !u!65 &2727477536687145053
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7282410561430282190}
+  m_GameObject: {fileID: 7715648691138666769}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 20
+  m_Size: {x: 20, y: 1, z: 20}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1771045126533742373
+--- !u!114 &1271659951216413754
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7282410561430282190}
+  m_GameObject: {fileID: 7715648691138666769}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f8e9ef9e5c69104a9ffb3d02284ef38, type: 3}
+  m_Script: {fileID: 11500000, guid: 612ef39d462975749b16a7c9e487ac6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  specificEnemy: {fileID: 3552760106713718368, guid: 18c6bd64d8a2eb64c88024a35783c8ec, type: 3}
-  maxEnemies: 4
+  enemies:
+  - {fileID: 2585285376980831116, guid: f9d4ec49121a2574a811b5c9b2b94755, type: 3}
+  - {fileID: 433623420032579706, guid: 9b6b4fa29a00ac7459ac89230e8f3974, type: 3}
+  - {fileID: 3112866548036757681, guid: b39c1e28a51b22f4e8f756ad6784cd76, type: 3}
+  maxEnemies: 5
   timer: 2
