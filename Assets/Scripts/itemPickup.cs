@@ -9,7 +9,7 @@ public class itemPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            gameManager.instance.playerScript.itemPickup(itemValues, gameManager.instance.playerScript.weaponListStats[gameManager.instance.playerScript.selectedGun]);
+            gameManager.instance.playerScript.itemPickup(itemValues);
             gameManager.instance.playerScript.UpdatePlayerHud();
             Destroy(gameObject);
         }

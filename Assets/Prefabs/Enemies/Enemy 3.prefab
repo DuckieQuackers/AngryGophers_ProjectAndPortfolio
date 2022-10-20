@@ -790,6 +790,8 @@ MonoBehaviour:
   eyes: {fileID: 7382268186870468602}
   drop: {fileID: 2145783617361206612, guid: 06f21f479f30e5142a5a434c17416bdb, type: 3}
   shade: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 1}
+  dropPool: []
+  hitBox: {fileID: 8186209892875414401}
   hp: 20
   attackRate: 1
   facePlayerSpeed: 3

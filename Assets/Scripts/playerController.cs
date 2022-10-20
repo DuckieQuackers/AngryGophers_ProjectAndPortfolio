@@ -37,6 +37,8 @@ public class playerController : MonoBehaviour, iDamage
     [SerializeField] float shootRate;
     [SerializeField] float shootDist;
     [SerializeField] int shootDmg;
+    [SerializeField] int currentAmmo;
+    [SerializeField] int maxAmmo;
     [SerializeField] int chamber;
     [SerializeField] int reloadTime;
 
@@ -66,7 +68,7 @@ public class playerController : MonoBehaviour, iDamage
     public bool playingMoveAudio;
     public bool playerSprinting;
     public bool grabbedPickup;
-    public int selectedGun;
+    [SerializeField] public int selectedGun;
     private int nextJump;
     List<int> poisonStack = new List<int>();
 
@@ -84,6 +86,10 @@ public class playerController : MonoBehaviour, iDamage
     {
         movement();
         jumping();
+        if (isReloading)
+        {
+            return;
+        }
         if (weaponListStats.Count > 0)
         {
 
@@ -101,7 +107,6 @@ public class playerController : MonoBehaviour, iDamage
         }
         
         gunSelection();
-
     }
     IEnumerator shoot(RangedWeapons currentGun)
     {
@@ -240,7 +245,7 @@ public class playerController : MonoBehaviour, iDamage
         weaponListStats.Add(stats);
         gameManager.instance.updateAmmoCount(stats.trackedAmmo, stats.trackedMaxAmmo);
     }
-    public void itemPickup(itemGrabs item, RangedWeapons currentWeapon)
+    public void itemPickup(itemGrabs item)
     {
         grabbedPickup = true;
         shootRate = shootRate / item.fireRate;
@@ -248,7 +253,7 @@ public class playerController : MonoBehaviour, iDamage
         shootDmg += item.damage;
         jumpsMax += item.addJumps;
         sprintSpeed += item.addSpeed;
-        currentWeapon.trackedMaxAmmo += item.ammoCount;
+        maxAmmo += item.ammoCount;
         if (grabbedPickup)
             StartCoroutine(coolDown(item));
         if (HP < HPOrig && item.addHealth == 1)
@@ -279,21 +284,15 @@ public class playerController : MonoBehaviour, iDamage
     {
         if (weaponListStats.Count > 0)
         {
-            if (!isReloading)
+            if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < weaponListStats.Count - 1)
             {
-                if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < weaponListStats.Count-1)
-                {
-                    selectedGun++;
-                    weaponSwap();
-
-
-                }
-                else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
-                {
-                    selectedGun--;
-                    weaponSwap();
-
-                }
+                selectedGun++;
+                weaponSwap();
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
+            {
+                selectedGun--;
+                weaponSwap();
             }
         }
     }
@@ -375,7 +374,6 @@ public class playerController : MonoBehaviour, iDamage
         else
             poisonStack.Add(ticks);
     }
-
     IEnumerator DoT()
     {
         while (poisonStack.Count > 0)
