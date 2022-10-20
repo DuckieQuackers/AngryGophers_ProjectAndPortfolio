@@ -74,8 +74,6 @@ public class playerController : MonoBehaviour, iDamage
         }
         if (gameManager.instance.playerScript.selectedGun > 0)
         {
-
-
             if (gameManager.instance.playerScript.weaponListStats[gameManager.instance.playerScript.selectedGun].trackedAmmo > 0)
             {
                 StartCoroutine(shoot(weaponListStats[selectedGun]));
@@ -87,9 +85,7 @@ public class playerController : MonoBehaviour, iDamage
                 return;
             }
         }
-        
         gunSelection();
-
     }
     IEnumerator shoot(RangedWeapons currentGun)
     {
@@ -222,8 +218,6 @@ public class playerController : MonoBehaviour, iDamage
         shootRate = stats.fireRate;
         shootDist = stats.fireDistance;
         chamber = stats.chamber;
-        gameManager.instance.currentAmmo = stats.ammoCount;
-        gameManager.instance.maximumAmmo = stats.maxAmmo;
         gameManager.instance.updateAmmoCount();
         reloadCount = stats.reloadCount;
         reloadTime = stats.reloadTime;
@@ -295,8 +289,7 @@ public class playerController : MonoBehaviour, iDamage
         shootDist = weaponListStats[selectedGun].fireDistance;
         chamber = weaponListStats[selectedGun].chamber;
         shootDmg = weaponListStats[selectedGun].damage * chamber;
-        gameManager.instance.currentAmmo = weaponListStats[selectedGun].ammoCount;
-        gameManager.instance.maximumAmmo = weaponListStats[selectedGun].maxAmmo;
+        gameManager.instance.updateAmmoCount();
         reloadCount = weaponListStats[selectedGun].reloadCount;
         reloadTime = weaponListStats[selectedGun].reloadTime;
         gunFireSound = weaponListStats[selectedGun].triggerSound;
@@ -324,7 +317,6 @@ public class playerController : MonoBehaviour, iDamage
         transform.position = gameManager.instance.spawnPosition.transform.position;
         controller.enabled = true;
     }
-
     public void startDoT(int ticks)
     {
         if(poisonStack.Count <= 0)
@@ -335,7 +327,6 @@ public class playerController : MonoBehaviour, iDamage
         else
             poisonStack.Add(ticks);
     }
-
     IEnumerator DoT()
     {
         while (poisonStack.Count > 0)

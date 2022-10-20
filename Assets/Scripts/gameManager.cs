@@ -8,8 +8,6 @@ public class gameManager : MonoBehaviour
     public static gameManager instance;
 
     public int enemyNumber;
-    public int maximumAmmo;
-    public int currentAmmo;
     [Header("----- Player Stuff -----")]
     public GameObject player;
 
@@ -35,13 +33,12 @@ public class gameManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<playerController>();
         spawnPosition = GameObject.FindGameObjectWithTag("Spawn Position");
-        currentAmmo = 0;
-        maximumAmmo = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+        updateAmmoCount();
         if (Input.GetButtonDown("Cancel") && !playerDeadMenu.activeSelf && !winMenu.activeSelf)
         {
             isPaused = !isPaused;
@@ -57,7 +54,6 @@ public class gameManager : MonoBehaviour
             }
         }
     }
-
     public void cursorLockPause()
     {
         Time.timeScale = 0;
@@ -70,14 +66,12 @@ public class gameManager : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
-
     public IEnumerator playerDamage()
     {
         playerDamageFlash.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         playerDamageFlash.SetActive(false);
     }
-
     public void checkEnemyTotal()
     {
         enemyNumber--;
@@ -89,17 +83,14 @@ public class gameManager : MonoBehaviour
             cursorLockPause();
         }
     }
-
     public void updateGameGoal()
     {
 
         enemyCountText.text = "Enemies left: " + enemyNumber.ToString("F0");
     }
-
     public void updateAmmoCount()
     {
-        currentAmmo = gameManager.instance.playerScript.weaponListStats[gameManager.instance.playerScript.selectedGun].trackedAmmo;
-        maximumAmmo = gameManager.instance.playerScript.weaponListStats[gameManager.instance.playerScript.selectedGun].trackedMaxAmmo;
-        ammoTracker.text = "Bullets: " + currentAmmo.ToString("F0") + "/ " + maximumAmmo.ToString("F0") + " Max Ammo";
+        if(instance.playerScript.weaponListStats.Count > 0)
+            ammoTracker.text = "Bullets: " + instance.playerScript.weaponListStats[instance.playerScript.selectedGun].ammoCount.ToString("F0") + "/ " + instance.playerScript.weaponListStats[instance.playerScript.selectedGun].maxAmmo.ToString("F0") + " Max Ammo";
     }
 }
