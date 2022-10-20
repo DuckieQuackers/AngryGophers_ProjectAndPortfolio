@@ -236,12 +236,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3321e1546e76334a8f84dc5bc1d46e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootRateUp: 0
+  shootDamageUp: 0
+  shootDistanceUp: 0
+  isFireRateUp: 0
+  isDamageUp: 0
+  isRangeUp: 0
+  isShootDistanceUp: 0
   HP: 10
   sprintSpeed: 15
   controller: {fileID: 6495032185901038210}
   playerSpeed: 5
   jumpHeight: 10
   gravityModifier: 25
+  stamina: 100
+  currentStamina: 100
   poisonDmg: 1
   dotTickRate: 0.75
   jumpsMax: 1
@@ -249,10 +258,9 @@ MonoBehaviour:
   shootDist: 0
   shootDmg: 0
   currentAmmo: 0
-  chamber: 0
-  reloadCount: 0
-  reloadTime: 0
   maxAmmo: 0
+  chamber: 0
+  reloadTime: 0
   audioSource: {fileID: 1388179238}
   playerTookDamage:
   - {fileID: 8300000, guid: 1f9e40f79651d82438ec6194845d74f8, type: 3}
@@ -301,6 +309,7 @@ MonoBehaviour:
   playingMoveAudio: 0
   playerSprinting: 0
   grabbedPickup: 0
+  onCooldown: 0
   selectedGun: 0
 --- !u!33 &6495032185901038215
 MeshFilter:
