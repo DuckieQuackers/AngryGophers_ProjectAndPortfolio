@@ -11,7 +11,6 @@ public class RangedWeapons : ScriptableObject
     public int damage;
     public int ammoCount;
     public int chamber;
-    public int reloadCount;
     public int reloadTime;
     public int maxAmmo;
     public int trackedAmmo;

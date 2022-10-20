@@ -23,7 +23,6 @@ public class playerController : MonoBehaviour, iDamage
     [SerializeField] float shootDist;
     [SerializeField] int shootDmg;
     [SerializeField] int chamber;
-    [SerializeField] int reloadCount;
     [SerializeField] int reloadTime;
 
     [Header("----- Audio -----")]
@@ -60,6 +59,7 @@ public class playerController : MonoBehaviour, iDamage
     {
         HPOrig = HP;
 
+        gameManager.instance.updateAmmoCount(0, 0);
         respawn();
     }
 
@@ -68,23 +68,19 @@ public class playerController : MonoBehaviour, iDamage
     {
         movement();
         jumping();
-        if (isReloading)
-        {
-            return;
-        }
-        if (gameManager.instance.playerScript.selectedGun > 0)
+        if (weaponListStats.Count > 0)
         {
 
-
-            if (gameManager.instance.playerScript.weaponListStats[gameManager.instance.playerScript.selectedGun].trackedAmmo > 0)
+            if (weaponListStats[selectedGun].trackedAmmo > 0 && !isReloading)
             {
-                StartCoroutine(shoot(weaponListStats[selectedGun]));
-                return;
+                if (Input.GetButton("Fire1") && !isShooting)
+                {
+                    StartCoroutine(shoot(weaponListStats[selectedGun]));
+                }
             }
-            if (!isReloading)
+            else if (weaponListStats[selectedGun].trackedAmmo <= 0 || Input.GetButtonDown("Reload") && weaponListStats[selectedGun].trackedAmmo != weaponListStats[selectedGun].ammoCount)
             {
                 StartCoroutine(reloadWeapon(weaponListStats[selectedGun]));
-                return;
             }
         }
         
@@ -93,14 +89,10 @@ public class playerController : MonoBehaviour, iDamage
     }
     IEnumerator shoot(RangedWeapons currentGun)
     {
-        if (weaponListStats.Count > 0 && Input.GetButton("Fire1") && !isShooting)
-        {
-            
                 isShooting = true;
-                //currentAmmo = currentAmmo - chamber;
-                currentGun.trackedAmmo = currentGun.trackedAmmo - currentGun.chamber;
+                currentGun.trackedAmmo -= currentGun.chamber;
                 audioSource.PlayOneShot(gunFireSound, gunFireSoundAudVolume);
-                gameManager.instance.updateAmmoCount();
+                gameManager.instance.updateAmmoCount(currentGun.trackedAmmo, currentGun.trackedMaxAmmo);
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
                 {
@@ -111,33 +103,29 @@ public class playerController : MonoBehaviour, iDamage
                 }
                 yield return new WaitForSeconds(shootRate);
                 isShooting = false;
-            
-        }
 
     }
     IEnumerator reloadWeapon(RangedWeapons stats)
     {
         isReloading = true;
-        if(stats.trackedMaxAmmo >= stats.reloadCount)
+        if (stats.trackedMaxAmmo - stats.ammoCount - stats.trackedAmmo >= 0)
         {
-            //maxAmmo = maxAmmo - reloadCount;
-            stats.trackedMaxAmmo = stats.trackedMaxAmmo - reloadCount;
-            //currentAmmo = reloadCount;
-            stats.trackedAmmo = stats.reloadCount;
-        }else if(stats.trackedMaxAmmo <= stats.reloadCount)
+            stats.trackedMaxAmmo -= stats.ammoCount - stats.trackedAmmo;
+            stats.trackedAmmo = stats.ammoCount;
+            reloadTime = stats.reloadTime;
+        }
+        else if (stats.trackedAmmo > 0)
         {
-            //currentAmmo = maxAmmo;
             stats.trackedAmmo = stats.trackedMaxAmmo;
-            stats.trackedMaxAmmo = stats.trackedMaxAmmo - stats.trackedMaxAmmo;
+            stats.trackedMaxAmmo = 0;
+            reloadTime = stats.reloadTime;
         }
         else
-        {
-            stats.trackedMaxAmmo = 0;
-            stats.trackedAmmo = 0;
-        }
+            reloadTime = 0;
         //play reload sound
         //play reload animation
         yield return new WaitForSeconds(reloadTime);
+        gameManager.instance.updateAmmoCount(stats.trackedAmmo, stats.trackedMaxAmmo);
         isReloading = false;
     }
     void movement()
@@ -221,15 +209,16 @@ public class playerController : MonoBehaviour, iDamage
     {
         shootRate = stats.fireRate;
         shootDist = stats.fireDistance;
+        shootDmg = stats.damage;
         chamber = stats.chamber;
-        gameManager.instance.currentAmmo = stats.ammoCount;
-        gameManager.instance.maximumAmmo = stats.maxAmmo;
-        reloadCount = stats.reloadCount;
+        stats.trackedAmmo = stats.ammoCount;
+        stats.trackedMaxAmmo = stats.maxAmmo;
         reloadTime = stats.reloadTime;
         gunFireSound = stats.triggerSound;
         gunModel.GetComponent<MeshFilter>().sharedMesh = stats.designModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = stats.designModel.GetComponent<MeshRenderer>().sharedMaterial;
         weaponListStats.Add(stats);
+        gameManager.instance.updateAmmoCount(stats.trackedAmmo, stats.trackedMaxAmmo);
     }
     public void itemPickup(itemGrabs item, RangedWeapons currentWeapon)
     {
@@ -296,7 +285,6 @@ public class playerController : MonoBehaviour, iDamage
         shootDmg = weaponListStats[selectedGun].damage * chamber;
         gameManager.instance.currentAmmo = weaponListStats[selectedGun].ammoCount;
         gameManager.instance.maximumAmmo = weaponListStats[selectedGun].maxAmmo;
-        reloadCount = weaponListStats[selectedGun].reloadCount;
         reloadTime = weaponListStats[selectedGun].reloadTime;
         gunFireSound = weaponListStats[selectedGun].triggerSound;
 
@@ -317,7 +305,7 @@ public class playerController : MonoBehaviour, iDamage
         UpdatePlayerHud();
         if (gameManager.instance.playerScript.selectedGun > 0)
         {
-            gameManager.instance.updateAmmoCount();
+            gameManager.instance.updateAmmoCount(weaponListStats[selectedGun].trackedAmmo, weaponListStats[selectedGun].trackedMaxAmmo) ;
         }
         
         transform.position = gameManager.instance.spawnPosition.transform.position;
