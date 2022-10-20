@@ -19,9 +19,9 @@ MonoBehaviour:
   chamber: 1
   reloadTime: 2
   maxAmmo: 60
-  trackedAmmo: 0
-  trackedMaxAmmo: 0
+  trackedAmmo: 10
+  trackedMaxAmmo: 36
   designModel: {fileID: 919132149155446097, guid: 8f9696fb6017be144a307b6586855ac0, type: 3}
-  triggerSound: {fileID: 8300000, guid: db5d3c9b952baca45b39d0b6b787aaeb, type: 3}
+  triggerSound: {fileID: 8300000, guid: 5aec0e63c3057ef4c812f96080e13f99, type: 3}
   hitEffect: {fileID: 0}
   triggerEffect: {fileID: 0}
