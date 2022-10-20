@@ -250,7 +250,7 @@ MonoBehaviour:
   jumpHeight: 10
   gravityModifier: 25
   stamina: 100
-  currentStamina: 0
+  currentStamina: 100
   poisonDmg: 1
   dotTickRate: 0.75
   jumpsMax: 1
@@ -303,6 +303,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 459374332b5eb3949a1f7ab764ef089c, type: 3}
   playerJumpsAudVolume: 0.494
   gunFireSoundAudVolume: 0.499
+  reloadSound: {fileID: 8300000, guid: d0b46c22a793a674db105f27b2a618ef, type: 3}
+  reloadSoundAudVolume: 1
   weaponListStats: []
   gunModel: {fileID: 512309188}
   isShooting: 0

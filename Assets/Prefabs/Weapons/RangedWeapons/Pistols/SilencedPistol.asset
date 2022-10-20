@@ -22,6 +22,6 @@ MonoBehaviour:
   trackedAmmo: 12
   trackedMaxAmmo: 100
   designModel: {fileID: 919132149155446097, guid: ca1c64f7c147fb0479f9ef03e264a372, type: 3}
-  triggerSound: {fileID: 8300000, guid: 5f1aac855b8eeb3488b6366123b50936, type: 3}
+  triggerSound: {fileID: 8300000, guid: 46ea97db7caac0a46bfbcdef39f4a902, type: 3}
   hitEffect: {fileID: 0}
   triggerEffect: {fileID: 0}
