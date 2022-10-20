@@ -715,6 +715,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1997ff74d1599ac439a3e55d76c53bfd, type: 3}
+--- !u!1 &1056636106 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5507046988319213742, guid: bb0a4af0577d32842b50e501a7470d92, type: 3}
+  m_PrefabInstance: {fileID: 4070096216912607567}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1249817869
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1481,7 +1486,7 @@ PrefabInstance:
       objectReference: {fileID: 113957151}
     - target: {fileID: 5169007021333632228, guid: bc76dbedcedd3da49ae36cd68b070f0e, type: 3}
       propertyPath: rooms.Array.size
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5169007021333632228, guid: bc76dbedcedd3da49ae36cd68b070f0e, type: 3}
       propertyPath: rooms.Array.data[0].room
@@ -1502,7 +1507,11 @@ PrefabInstance:
     - target: {fileID: 5169007021333632228, guid: bc76dbedcedd3da49ae36cd68b070f0e, type: 3}
       propertyPath: rooms.Array.data[4].room
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1056636106}
+    - target: {fileID: 5169007021333632228, guid: bc76dbedcedd3da49ae36cd68b070f0e, type: 3}
+      propertyPath: rooms.Array.data[5].room
+      value: 
+      objectReference: {fileID: 1056636106}
     - target: {fileID: 5169007021333632228, guid: bc76dbedcedd3da49ae36cd68b070f0e, type: 3}
       propertyPath: rooms.Array.data[0].obligatory
       value: 0
@@ -1521,7 +1530,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5169007021333632228, guid: bc76dbedcedd3da49ae36cd68b070f0e, type: 3}
       propertyPath: rooms.Array.data[4].obligatory
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169007021333632228, guid: bc76dbedcedd3da49ae36cd68b070f0e, type: 3}
+      propertyPath: rooms.Array.data[5].obligatory
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5169007021333632228, guid: bc76dbedcedd3da49ae36cd68b070f0e, type: 3}
       propertyPath: rooms.Array.data[0].maxPosition.x
@@ -1589,19 +1602,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5169007021333632228, guid: bc76dbedcedd3da49ae36cd68b070f0e, type: 3}
       propertyPath: rooms.Array.data[4].maxPosition.x
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5169007021333632228, guid: bc76dbedcedd3da49ae36cd68b070f0e, type: 3}
       propertyPath: rooms.Array.data[4].maxPosition.y
-      value: 3
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5169007021333632228, guid: bc76dbedcedd3da49ae36cd68b070f0e, type: 3}
       propertyPath: rooms.Array.data[4].minPosition.x
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5169007021333632228, guid: bc76dbedcedd3da49ae36cd68b070f0e, type: 3}
       propertyPath: rooms.Array.data[4].minPosition.y
-      value: 3
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169007021333632228, guid: bc76dbedcedd3da49ae36cd68b070f0e, type: 3}
+      propertyPath: rooms.Array.data[5].maxPosition.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169007021333632228, guid: bc76dbedcedd3da49ae36cd68b070f0e, type: 3}
+      propertyPath: rooms.Array.data[5].maxPosition.y
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169007021333632228, guid: bc76dbedcedd3da49ae36cd68b070f0e, type: 3}
+      propertyPath: rooms.Array.data[5].minPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5169007021333632228, guid: bc76dbedcedd3da49ae36cd68b070f0e, type: 3}
+      propertyPath: rooms.Array.data[5].minPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5169007021333632229, guid: bc76dbedcedd3da49ae36cd68b070f0e, type: 3}
       propertyPath: m_Name

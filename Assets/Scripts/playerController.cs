@@ -52,6 +52,9 @@ public class playerController : MonoBehaviour, iDamage
     [Range(0, 1)] [SerializeField] float playerJumpsAudVolume;
     private AudioClip gunFireSound;
     [Range(0, 1)] [SerializeField] float gunFireSoundAudVolume;
+    [SerializeField] AudioClip reloadSound;
+    [Range(0, 1)] [SerializeField] float reloadSoundAudVolume;
+
 
 
     [SerializeField] public List<RangedWeapons> weaponListStats = new List<RangedWeapons>();
@@ -88,6 +91,9 @@ public class playerController : MonoBehaviour, iDamage
     {
         movement();
         jumping();
+
+        gunSelection();
+
         if (isReloading)
         {
             return;
@@ -97,32 +103,31 @@ public class playerController : MonoBehaviour, iDamage
 
             if (weaponListStats[selectedGun].trackedAmmo > 0 && !isReloading)
             {
-                if (Input.GetButton("Fire1") && !isShooting)
-                {
                     StartCoroutine(shoot(weaponListStats[selectedGun]));
-                    isShooting = false;
-                }
             }
-            else if (weaponListStats[selectedGun].trackedAmmo <= 0 || Input.GetButtonDown("Reload") && weaponListStats[selectedGun].trackedAmmo != weaponListStats[selectedGun].ammoCount)
+            else if (weaponListStats[selectedGun].trackedAmmo <= 0)
             {
                 StartCoroutine(reloadWeapon(weaponListStats[selectedGun]));
             }
         }
-        gunSelection();
     }
     IEnumerator shoot(RangedWeapons currentGun)
     {
-                isShooting = true;
-                currentGun.trackedAmmo -= currentGun.chamber;
-                audioSource.PlayOneShot(gunFireSound, gunFireSoundAudVolume);
-                gameManager.instance.updateAmmoCount(currentGun.trackedAmmo, currentGun.trackedMaxAmmo);
-                RaycastHit hit;
-                if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
-                {
+        if (Input.GetButton("Fire1") && !isShooting)
+        {
+            isShooting = true;
+            currentGun.trackedAmmo -= currentGun.chamber;
+            audioSource.PlayOneShot(gunFireSound, gunFireSoundAudVolume);
+            gameManager.instance.updateAmmoCount(currentGun.trackedAmmo, currentGun.trackedMaxAmmo);
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
+            {
+                if (hit.collider.GetComponent<iDamage>() != null)
                     hit.collider.GetComponent<iDamage>().takeDamage(shootDmg);
-                }
-                yield return new WaitForSeconds(shootRate);
-                isShooting = false;
+            }
+            yield return new WaitForSeconds(shootRate);
+            isShooting = false;
+        }
 
     }
     IEnumerator reloadWeapon(RangedWeapons stats)
@@ -133,12 +138,14 @@ public class playerController : MonoBehaviour, iDamage
             stats.trackedMaxAmmo -= stats.ammoCount - stats.trackedAmmo;
             stats.trackedAmmo = stats.ammoCount;
             reloadTime = stats.reloadTime;
+            audioSource.PlayOneShot(reloadSound, reloadSoundAudVolume);
         }
         else if (stats.trackedAmmo > 0)
         {
             stats.trackedAmmo = stats.trackedMaxAmmo;
             stats.trackedMaxAmmo = 0;
             reloadTime = stats.reloadTime;
+            audioSource.PlayOneShot(reloadSound, reloadSoundAudVolume);
         }
         else
             reloadTime = 0;
@@ -207,11 +214,14 @@ public class playerController : MonoBehaviour, iDamage
         HP -= dmg;
         audioSource.PlayOneShot(playerTookDamage[Random.Range(0, playerTookDamage.Length - 1)], playerTookDamageAudVolume);
         UpdatePlayerHud();
-        StartCoroutine(gameManager.instance.playerDamage());
         if (HP <= 0)
         {
             gameManager.instance.playerDeadMenu.SetActive(true);
             gameManager.instance.cursorLockPause();
+        }
+        else
+        {
+            StartCoroutine(gameManager.instance.playerDamage());
         }
     }
     void jumping()
@@ -326,11 +336,10 @@ public class playerController : MonoBehaviour, iDamage
         shootDist = weaponListStats[selectedGun].fireDistance;
         chamber = weaponListStats[selectedGun].chamber;
         shootDmg = weaponListStats[selectedGun].damage * chamber;
-        weaponListStats[selectedGun].trackedAmmo = weaponListStats[selectedGun].ammoCount;
-        weaponListStats[selectedGun].trackedMaxAmmo = weaponListStats[selectedGun].maxAmmo;
         reloadTime = weaponListStats[selectedGun].reloadTime;
         gunFireSound = weaponListStats[selectedGun].triggerSound;
 
+        gameManager.instance.updateAmmoCount(weaponListStats[selectedGun].trackedAmmo, weaponListStats[selectedGun].trackedMaxAmmo);
         gunModel.GetComponent<MeshFilter>().sharedMesh = weaponListStats[selectedGun].designModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = weaponListStats[selectedGun].designModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
@@ -359,7 +368,7 @@ public class playerController : MonoBehaviour, iDamage
     IEnumerator sprintCooldown()
     {
         onCooldown = true;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(1f);
         currentStamina = stamina;
         UpdatePlayerHud();
         onCooldown = false;
