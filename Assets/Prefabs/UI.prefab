@@ -3781,8 +3781,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyNumber: 0
-  maximumAmmo: 0
-  currentAmmo: 0
   player: {fileID: 0}
   playerScript: {fileID: 0}
   spawnPosition: {fileID: 0}

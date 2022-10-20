@@ -15,6 +15,7 @@ public class enemyAi : MonoBehaviour, iDamage
     [SerializeField] GameObject drop;
     [SerializeField] Color shade;
     [SerializeField] List<GameObject> dropPool;
+    [SerializeField] Collider hitBox;
 
     [Header("----- Enemy combat -----")]
     [Range(1, 50)][SerializeField] int hp;
@@ -150,6 +151,7 @@ public class enemyAi : MonoBehaviour, iDamage
             anim.SetBool("Dead", true);
             aud.PlayOneShot(deathAud, deathVol);
             agent.enabled = false;
+            hitBox.enabled = false;
 
             if(drop != null)
                 Instantiate(drop, transform.position, transform.rotation);
