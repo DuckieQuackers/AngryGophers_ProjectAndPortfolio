@@ -8,7 +8,7 @@ public class enemyAi : MonoBehaviour, iDamage
     [Header ("----- Components -----")]
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
-    [SerializeField] GameObject bullet;
+    [SerializeField] protected GameObject bullet;
     [SerializeField] protected AudioSource aud;
     [SerializeField] Animator anim;
     [SerializeField] protected GameObject eyes;

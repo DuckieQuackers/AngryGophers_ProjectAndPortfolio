@@ -242,6 +242,8 @@ MonoBehaviour:
   playerSpeed: 5
   jumpHeight: 10
   gravityModifier: 25
+  poisonDmg: 1
+  dotTickRate: 0.75
   jumpsMax: 1
   shootRate: 0
   shootDist: 0
