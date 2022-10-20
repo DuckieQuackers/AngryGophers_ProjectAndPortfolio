@@ -167,11 +167,11 @@ public class playerController : MonoBehaviour, iDamage
         }
         //Player Movement and Sprint
         move = (transform.right * Input.GetAxis("Horizontal") + (transform.forward * Input.GetAxis("Vertical")));
-        if (Input.GetButton("Sprint"))
+        if (Input.GetButton("Sprint") && currentStamina!=0)
         {
             playerSprinting = true;
             //remove stamina here
-            //currentStamina--;
+            currentStamina--;
             controller.Move(move * Time.deltaTime * (sprintSpeed + playerSpeed));
         }
         else
@@ -376,6 +376,9 @@ public class playerController : MonoBehaviour, iDamage
             {
                 currentStamina = stamina;
             }
+
+        }
+    }
     public void startDoT(int ticks)
     {
         if(poisonStack.Count <= 0)
