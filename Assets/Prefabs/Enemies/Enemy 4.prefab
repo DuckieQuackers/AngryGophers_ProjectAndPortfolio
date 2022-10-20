@@ -77,7 +77,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  hitBox: {fileID: 0}
+  hitBox: {fileID: 7008159151479195413}
   hp: 7
   attackRate: 1.5
   facePlayerSpeed: 3
