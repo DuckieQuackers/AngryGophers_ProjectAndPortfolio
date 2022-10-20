@@ -105,56 +105,22 @@ public class playerController : MonoBehaviour, iDamage
     }
     IEnumerator shoot(RangedWeapons currentGun)
     {
-<<<<<<< HEAD
-        if (weaponListStats.Count > 0 && Input.GetButton("Fire1") && !isShooting)
-        {
-
-            isShooting = true;
-            //currentAmmo = currentAmmo - chamber;
-            currentGun.trackedAmmo = currentGun.trackedAmmo - currentGun.chamber;
-            audioSource.PlayOneShot(gunFireSound, gunFireSoundAudVolume);
-            gameManager.instance.updateAmmoCount();
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
-            {
-               
-                if (hit.collider.GetComponent<iDamage>() != null)
-=======
                 isShooting = true;
                 currentGun.trackedAmmo -= currentGun.chamber;
                 audioSource.PlayOneShot(gunFireSound, gunFireSoundAudVolume);
                 gameManager.instance.updateAmmoCount(currentGun.trackedAmmo, currentGun.trackedMaxAmmo);
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
->>>>>>> 7371bf4086e607bcc7084d33e35e391b88ea2adf
                 {
                     hit.collider.GetComponent<iDamage>().takeDamage(shootDmg);
                 }
-<<<<<<< HEAD
-            }
-            yield return new WaitForSeconds(shootRate);
-            isShooting = false;
-
-        }
-=======
                 yield return new WaitForSeconds(shootRate);
                 isShooting = false;
->>>>>>> 7371bf4086e607bcc7084d33e35e391b88ea2adf
 
     }
     IEnumerator reloadWeapon(RangedWeapons stats)
     {
         isReloading = true;
-<<<<<<< HEAD
-        if (stats.trackedMaxAmmo >= stats.reloadCount)
-        {
-            //maxAmmo = maxAmmo - reloadCount;
-            stats.trackedMaxAmmo = stats.trackedMaxAmmo - reloadCount;
-            //currentAmmo = reloadCount;
-            stats.trackedAmmo = stats.reloadCount;
-        }
-        else if (stats.trackedMaxAmmo <= stats.reloadCount)
-=======
         if (stats.trackedMaxAmmo - stats.ammoCount - stats.trackedAmmo >= 0)
         {
             stats.trackedMaxAmmo -= stats.ammoCount - stats.trackedAmmo;
@@ -162,7 +128,6 @@ public class playerController : MonoBehaviour, iDamage
             reloadTime = stats.reloadTime;
         }
         else if (stats.trackedAmmo > 0)
->>>>>>> 7371bf4086e607bcc7084d33e35e391b88ea2adf
         {
             stats.trackedAmmo = stats.trackedMaxAmmo;
             stats.trackedMaxAmmo = 0;
