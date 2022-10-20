@@ -324,11 +324,10 @@ public class playerController : MonoBehaviour, iDamage
         shootDist = weaponListStats[selectedGun].fireDistance;
         chamber = weaponListStats[selectedGun].chamber;
         shootDmg = weaponListStats[selectedGun].damage * chamber;
-        weaponListStats[selectedGun].trackedAmmo = weaponListStats[selectedGun].ammoCount;
-        weaponListStats[selectedGun].trackedMaxAmmo = weaponListStats[selectedGun].maxAmmo;
         reloadTime = weaponListStats[selectedGun].reloadTime;
         gunFireSound = weaponListStats[selectedGun].triggerSound;
 
+        gameManager.instance.updateAmmoCount(weaponListStats[selectedGun].trackedAmmo, weaponListStats[selectedGun].trackedMaxAmmo);
         gunModel.GetComponent<MeshFilter>().sharedMesh = weaponListStats[selectedGun].designModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = weaponListStats[selectedGun].designModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
@@ -356,7 +355,7 @@ public class playerController : MonoBehaviour, iDamage
     IEnumerator sprintCooldown()
     {
         onCooldown = true;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(1f);
         currentStamina = stamina;
         onCooldown = false;
 
