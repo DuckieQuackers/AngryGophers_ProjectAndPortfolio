@@ -8,6 +8,8 @@ public class SpawnLocal : MonoBehaviour
     [SerializeField] string spawnTag;
     [SerializeField] GameObject enemyHeld;
 
+    bool hasSpawned;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +19,10 @@ public class SpawnLocal : MonoBehaviour
 
     public void spawnEnemy()
     {
-        Instantiate(enemyHeld, transform.position, transform.rotation);
+        if (!hasSpawned)
+        {
+            Instantiate(enemyHeld, transform.position, transform.rotation);
+            hasSpawned = true;
+        }
     }
 }
