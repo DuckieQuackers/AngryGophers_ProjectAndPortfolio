@@ -14,6 +14,7 @@ public class enemyAi : MonoBehaviour, iDamage
     [SerializeField] protected GameObject eyes;
     [SerializeField] GameObject drop;
     [SerializeField] Color shade;
+    [SerializeField] List<GameObject> dropPool;
 
     [Header("----- Enemy combat -----")]
     [Range(1, 50)][SerializeField] int hp;
@@ -57,6 +58,8 @@ public class enemyAi : MonoBehaviour, iDamage
         speedOriginal = agent.speed;
         stoppingDis = agent.stoppingDistance;
         model.material.color = shade;
+        if(dropPool.Count > 0)
+            drop = dropPool[Random.Range(0, dropPool.Count - 1)];
         roam();
     }
 

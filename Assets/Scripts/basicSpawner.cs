@@ -5,6 +5,7 @@ using UnityEngine;
 public class basicSpawner : MonoBehaviour
 {
 
+    [SerializeField] GameObject spawnPos;
     [SerializeField] GameObject specificEnemy;
     [SerializeField] int maxEnemies;
     [SerializeField] int timer;
@@ -31,8 +32,8 @@ public class basicSpawner : MonoBehaviour
     IEnumerator spawn()
     {
         isSpawning = true;
-        if(transform.parent != null)
-            Instantiate(specificEnemy, transform.parent.position, specificEnemy.transform.rotation);
+        if(spawnPos != null)
+            Instantiate(specificEnemy, spawnPos.transform.position, specificEnemy.transform.rotation);
         else
             Instantiate(specificEnemy, transform.position, specificEnemy.transform.rotation);
         spawnedEnemies++;
