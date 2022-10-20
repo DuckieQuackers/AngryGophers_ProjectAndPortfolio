@@ -97,4 +97,9 @@ public class gameManager : MonoBehaviour
 
         enemyCountText.text = "Enemies left: " + enemyNumber.ToString("F0");
     }
+
+    public void updateAmmoCount(int inMag, int inReserve)
+    {
+        ammoTracker.text = "Bullets: " + inMag.ToString("F0") + "/ " + inReserve.ToString("F0");
+    }
 }

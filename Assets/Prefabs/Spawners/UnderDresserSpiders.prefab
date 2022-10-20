@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 43602335945542429}
+  - component: {fileID: 4154735494551034402}
   m_Layer: 5
   m_Name: UnderDresserSpiders
   m_TagString: Untagged
@@ -25,13 +26,28 @@ Transform:
   m_GameObject: {fileID: 1690822811152549477}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 45.31, y: 2.72, z: -22.45}
-  m_LocalScale: {x: 0.23985, y: 0.23985, z: 0.23985}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1237873311174808361}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4154735494551034402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690822811152549477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8e9ef9e5c69104a9ffb3d02284ef38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  specificEnemy: {fileID: 2585285376980831116, guid: f9d4ec49121a2574a811b5c9b2b94755, type: 3}
+  maxEnemies: 4
+  timer: 2
 --- !u!1 &7282410561430282190
 GameObject:
   m_ObjectHideFlags: 0
@@ -42,7 +58,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1237873311174808361}
   - component: {fileID: 3061204792246750116}
-  - component: {fileID: 1771045126533742373}
   m_Layer: 5
   m_Name: SpawnTrigger
   m_TagString: Untagged
@@ -78,18 +93,3 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 20
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1771045126533742373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7282410561430282190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f8e9ef9e5c69104a9ffb3d02284ef38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  specificEnemy: {fileID: 3552760106713718368, guid: 18c6bd64d8a2eb64c88024a35783c8ec, type: 3}
-  maxEnemies: 4
-  timer: 2
