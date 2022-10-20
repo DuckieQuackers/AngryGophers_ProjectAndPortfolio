@@ -224,6 +224,7 @@ public class playerController : MonoBehaviour, iDamage
         chamber = stats.chamber;
         gameManager.instance.currentAmmo = stats.ammoCount;
         gameManager.instance.maximumAmmo = stats.maxAmmo;
+        gameManager.instance.updateAmmoCount();
         reloadCount = stats.reloadCount;
         reloadTime = stats.reloadTime;
         gunFireSound = stats.triggerSound;
