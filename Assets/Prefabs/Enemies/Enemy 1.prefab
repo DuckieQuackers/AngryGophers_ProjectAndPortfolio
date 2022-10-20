@@ -839,7 +839,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  hitBox: {fileID: 0}
+  hitBox: {fileID: 8080533522547260579}
   hp: 10
   attackRate: 0.75
   facePlayerSpeed: 4
