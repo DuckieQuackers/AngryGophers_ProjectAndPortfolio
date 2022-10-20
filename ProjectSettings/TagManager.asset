@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Spawn Position
+  - Dungeon Spawner
+  - MainRoom
   layers:
   - Default
   - TransparentFX
@@ -14,8 +16,8 @@ TagManager:
   - UI
   - Enemy
   - Enemy Bullet
-  - 
-  - 
+  - Player
+  - Weapon
   - 
   - 
   - 

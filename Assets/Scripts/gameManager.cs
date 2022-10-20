@@ -8,8 +8,9 @@ public class gameManager : MonoBehaviour
     public static gameManager instance;
 
     public int enemyNumber;
-    public int maximumAmmo;
     public int currentAmmo;
+    public int maximumAmmo;
+
     [Header("----- Player Stuff -----")]
     public GameObject player;
 
@@ -35,8 +36,6 @@ public class gameManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<playerController>();
         spawnPosition = GameObject.FindGameObjectWithTag("Spawn Position");
-        currentAmmo = 0;
-        maximumAmmo = 0;
     }
 
     // Update is called once per frame
@@ -88,6 +87,12 @@ public class gameManager : MonoBehaviour
             winMenu.SetActive(true);
             cursorLockPause();
         }
+    }
+
+    public void enemySpawn()
+    {
+        enemyNumber++;
+        updateGameGoal();
     }
 
     public void updateGameGoal()
