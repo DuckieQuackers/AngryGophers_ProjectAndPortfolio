@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cbb1831c6b016c4eb4a2f0f6ed65aab, type: 3}
   m_Name: Automatic
   m_EditorClassIdentifier: 
-  fireRate: 0.5
+  fireRate: 0.25
   fireDistance: 40
-  damage: 6
+  damage: 4
   ammoCount: 30
   chamber: 1
-  reloadCount: 30
   reloadTime: 4
   maxAmmo: 300
+  trackedAmmo: 30
+  trackedMaxAmmo: 300
   designModel: {fileID: 919132149155446097, guid: a957639d15248134a9be03d5ae4fed7f, type: 3}
-  triggerSound: {fileID: 0}
+  triggerSound: {fileID: 8300000, guid: c86bd8675a747e1429f33504391b3e3e, type: 3}
   hitEffect: {fileID: 0}
   triggerEffect: {fileID: 0}
