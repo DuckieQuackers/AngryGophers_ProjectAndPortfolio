@@ -822,6 +822,24 @@ MonoBehaviour:
   eyes: {fileID: 7479218008689531096}
   drop: {fileID: 0}
   shade: {r: 1, g: 1, b: 1, a: 1}
+  dropPool:
+  - {fileID: 6683113323272440516, guid: 7e084db0c55160645bde246aacbac795, type: 3}
+  - {fileID: 6683113323272440516, guid: 7e084db0c55160645bde246aacbac795, type: 3}
+  - {fileID: 6683113323272440516, guid: 7e084db0c55160645bde246aacbac795, type: 3}
+  - {fileID: 6683113323272440516, guid: 7e084db0c55160645bde246aacbac795, type: 3}
+  - {fileID: 7463446591455279224, guid: 7c9c1f054d20f8643a27dd9e7fe35784, type: 3}
+  - {fileID: 2202212487478745896, guid: d52af5d41583e544291e0e7ed10b38ff, type: 3}
+  - {fileID: 1933718105332589820, guid: 0d3aef41d55cf674ea15463c91b1dd5b, type: 3}
+  - {fileID: 6170610148719317610, guid: 78e71b697da99124a818ce44d31ef99d, type: 3}
+  - {fileID: 6170610148719317610, guid: 78e71b697da99124a818ce44d31ef99d, type: 3}
+  - {fileID: 6170610148719317610, guid: 78e71b697da99124a818ce44d31ef99d, type: 3}
+  - {fileID: 1151964780656947781, guid: e5adc1658c9eba04facb4ba9ec84bd47, type: 3}
+  - {fileID: 6457280144052288088, guid: 000c1821362af6b43824d687cfdde79e, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  hitBox: {fileID: 0}
   hp: 10
   attackRate: 0.75
   facePlayerSpeed: 4
