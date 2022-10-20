@@ -15,11 +15,11 @@ MonoBehaviour:
   fireRate: 0.5
   fireDistance: 100
   damage: 8
-  ammoCount: 30
+  ammoCount: 100
   chamber: 1
-  reloadTime: 6
-  maxAmmo: 200
-  trackedAmmo: 28
+  reloadTime: 3
+  maxAmmo: 300
+  trackedAmmo: 100
   trackedMaxAmmo: 200
   designModel: {fileID: 919132149155446097, guid: ffb3f5f9531da764c906b0baf3285c62, type: 3}
   triggerSound: {fileID: 8300000, guid: 5aec0e63c3057ef4c812f96080e13f99, type: 3}
