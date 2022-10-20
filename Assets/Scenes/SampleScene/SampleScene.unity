@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4366919, g: 0.48429096, b: 0.56453973, a: 1}
+  m_IndirectSpecularColor: {r: 0.43669215, g: 0.48429126, b: 0.5645402, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -160,7 +160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8365177918413181302, guid: 25f3c7af67f5ca9409efad99d1e6c73b, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8365177918413181302, guid: 25f3c7af67f5ca9409efad99d1e6c73b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -502,7 +502,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 91.31702, y: 84.655, z: 31.492004}
 --- !u!1 &897877321
 GameObject:
@@ -957,7 +957,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 231955423302194241, guid: 3e2d4d1d27f656c48893a0ec6f7d3fde, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 231955423302194241, guid: 3e2d4d1d27f656c48893a0ec6f7d3fde, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2190,7 +2190,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5169007021333632227, guid: bc76dbedcedd3da49ae36cd68b070f0e, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5169007021333632227, guid: bc76dbedcedd3da49ae36cd68b070f0e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2611,7 +2611,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8326891782756852940, guid: 53a680b3bd9a688479499736abc863e3, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8326891782756852940, guid: 53a680b3bd9a688479499736abc863e3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2728,7 +2728,7 @@ Transform:
   - {fileID: 8365177920283306146}
   - {fileID: 8365177920098768798}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8365177920024576414
 MonoBehaviour:
