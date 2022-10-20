@@ -72,6 +72,10 @@ public class playerController : MonoBehaviour, iDamage
         {
             return;
         }
+        if (gameManager.instance.playerScript.selectedGun > 0)
+        {
+
+
             if (gameManager.instance.playerScript.weaponListStats[gameManager.instance.playerScript.selectedGun].trackedAmmo > 0)
             {
                 StartCoroutine(shoot(weaponListStats[selectedGun]));
@@ -82,6 +86,7 @@ public class playerController : MonoBehaviour, iDamage
                 StartCoroutine(reloadWeapon(weaponListStats[selectedGun]));
                 return;
             }
+        }
         
         gunSelection();
 
@@ -310,7 +315,11 @@ public class playerController : MonoBehaviour, iDamage
         gameManager.instance.playerDeadMenu.SetActive(false);
         HP = HPOrig;
         UpdatePlayerHud();
-        gameManager.instance.updateAmmoCount();
+        if (gameManager.instance.playerScript.selectedGun > 0)
+        {
+            gameManager.instance.updateAmmoCount();
+        }
+        
         transform.position = gameManager.instance.spawnPosition.transform.position;
         controller.enabled = true;
     }
