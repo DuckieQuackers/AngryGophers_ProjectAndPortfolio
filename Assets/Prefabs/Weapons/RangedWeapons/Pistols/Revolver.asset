@@ -17,10 +17,11 @@ MonoBehaviour:
   damage: 5
   ammoCount: 6
   chamber: 1
-  reloadCount: 6
   reloadTime: 6
   maxAmmo: 100
+  trackedAmmo: 0
+  trackedMaxAmmo: 0
   designModel: {fileID: 919132149155446097, guid: 4df3ce82db8e66645afd54ab1d5b0262, type: 3}
-  triggerSound: {fileID: 8300000, guid: 813e058842af4a1439d878a5247594af, type: 3}
+  triggerSound: {fileID: 8300000, guid: c86bd8675a747e1429f33504391b3e3e, type: 3}
   hitEffect: {fileID: 0}
   triggerEffect: {fileID: 0}

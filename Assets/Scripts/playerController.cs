@@ -101,7 +101,8 @@ public class playerController : MonoBehaviour, iDamage
                 RaycastHit hit;
                 if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
                 {
-                    hit.collider.GetComponent<iDamage>().takeDamage(shootDmg);
+                    if(hit.collider.GetComponent<iDamage>() != null)   
+                        hit.collider.GetComponent<iDamage>().takeDamage(shootDmg);
                 }
                 yield return new WaitForSeconds(shootRate);
                 isShooting = false;
