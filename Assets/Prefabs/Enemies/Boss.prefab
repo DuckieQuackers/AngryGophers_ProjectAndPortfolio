@@ -501,7 +501,10 @@ MonoBehaviour:
   eyes: {fileID: 193013454491493871}
   drop: {fileID: 0}
   shade: {r: 1, g: 1, b: 1, a: 1}
+  dropPool: []
+  hitBox: {fileID: 6628874151618136895}
   hp: 50
+  isImportant: 1
   attackRate: 1
   facePlayerSpeed: 2
   sightDis: 40

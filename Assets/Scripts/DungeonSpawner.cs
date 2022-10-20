@@ -10,8 +10,7 @@ public class DungeonSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager.instance.enemyNumber++;
-        gameManager.instance.updateGameGoal();
+
     }
 
     private void OnTriggerEnter(Collider other)

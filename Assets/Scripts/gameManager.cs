@@ -7,7 +7,7 @@ public class gameManager : MonoBehaviour
 {
     public static gameManager instance;
 
-    public int enemyNumber;
+    public int bossNumber;
     public int currentAmmo;
     public int maximumAmmo;
 
@@ -79,10 +79,10 @@ public class gameManager : MonoBehaviour
 
     public void checkEnemyTotal()
     {
-        enemyNumber--;
+        bossNumber--;
         updateGameGoal();
 
-        if (enemyNumber <= 0)
+        if (bossNumber <= 0)
         {
             winMenu.SetActive(true);
             cursorLockPause();
@@ -91,14 +91,14 @@ public class gameManager : MonoBehaviour
 
     public void enemySpawn()
     {
-        enemyNumber++;
+        bossNumber++;
         updateGameGoal();
     }
 
     public void updateGameGoal()
     {
 
-        enemyCountText.text = "Enemies left: " + enemyNumber.ToString("F0");
+        enemyCountText.text = "Exterminate: " + bossNumber.ToString("F0");
     }
 
     public void updateAmmoCount(int inMag, int inReserve)
