@@ -70,15 +70,10 @@ public class playerController : MonoBehaviour, iDamage
     {
         movement();
         jumping();
-
         if (isReloading)
         {
             return;
         }
-        if (currentAmmo > 0)
-            StartCoroutine(shoot());
-        if (!isReloading && currentAmmo <= 0)
-            StartCoroutine(reloadWeapon());
         if (weaponListStats.Count > 0)
         {
 
@@ -97,7 +92,7 @@ public class playerController : MonoBehaviour, iDamage
         
         gunSelection();
     }
-    IEnumerator shoot()
+    IEnumerator shoot(RangedWeapons currentGun)
     {
                 isShooting = true;
                 currentGun.trackedAmmo -= currentGun.chamber;
@@ -112,7 +107,7 @@ public class playerController : MonoBehaviour, iDamage
                 isShooting = false;
 
     }
-    IEnumerator reloadWeapon()
+    IEnumerator reloadWeapon(RangedWeapons stats)
     {
         isReloading = true;
         if (stats.trackedMaxAmmo - stats.ammoCount - stats.trackedAmmo >= 0)

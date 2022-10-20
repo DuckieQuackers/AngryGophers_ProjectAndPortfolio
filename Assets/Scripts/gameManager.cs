@@ -8,6 +8,8 @@ public class gameManager : MonoBehaviour
     public static gameManager instance;
 
     public int enemyNumber;
+    public int currentAmmo;
+    public int maximumAmmo;
 
     [Header("----- Player Stuff -----")]
     public GameObject player;
@@ -23,6 +25,7 @@ public class gameManager : MonoBehaviour
     public GameObject playerDamageFlash;
     public Image playerHPBar;
     public TextMeshProUGUI enemyCountText;
+    public TextMeshProUGUI ammoTracker;
 
     public bool isPaused;
 
