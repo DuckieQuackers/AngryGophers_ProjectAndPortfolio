@@ -120,6 +120,7 @@ public class playerController : MonoBehaviour, iDamage
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
             {
+               
                 if (hit.collider.GetComponent<iDamage>() != null)
                 {
                     hit.collider.GetComponent<iDamage>().takeDamage(shootDmg);
@@ -242,6 +243,7 @@ public class playerController : MonoBehaviour, iDamage
     }
     public void weaponPickup(RangedWeapons stats)
     {
+        shootDmg = stats.damage;
         shootRate = stats.fireRate;
         shootDist = stats.fireDistance;
         chamber = stats.chamber;
@@ -291,11 +293,11 @@ public class playerController : MonoBehaviour, iDamage
     }
     public void gunSelection()
     {
-        if (weaponListStats.Count > 1)
+        if (weaponListStats.Count > 0)
         {
             if (!isReloading)
             {
-                if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < weaponListStats.Count - 1)
+                if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < weaponListStats.Count-1)
                 {
                     selectedGun++;
                     weaponSwap();
@@ -330,6 +332,7 @@ public class playerController : MonoBehaviour, iDamage
             shootRate = weaponListStats[selectedGun].fireRate;
             shootDist = weaponListStats[selectedGun].fireDistance;
             shootDmg = weaponListStats[selectedGun].damage;
+            
 
         }
         shootRate = weaponListStats[selectedGun].fireRate;
