@@ -263,10 +263,7 @@ public class playerController : MonoBehaviour, iDamage
     public void itemPickup(itemGrabs item)
     {
         grabbedPickup = true;
-        if(item.fireRate > 0)
-        {
-            shootRate = shootRate / item.fireRate;
-        }
+        //shootRate = shootRate / item.fireRate;
         shootDist += item.fireDistance;
         shootDmg += item.damage;
         jumpsMax += item.addJumps;
@@ -286,18 +283,50 @@ public class playerController : MonoBehaviour, iDamage
                 HP = HPOrig;
             }
         }
+
         grabbedPickup = false;
     }
     IEnumerator coolDown(itemGrabs item)
     {
+        if (item.fireRate == 1)
+        {
+            isFireRateUp = true;
+            shootRate /= shootRateUp;
+            yield return new WaitForSeconds(10.00f);
+            isFireRateUp = false;
+            shootRate *= shootRateUp;
+            grabbedPickup = false;
+        }
+        else if (item.damage == 1)
+        {
+            isDamageUp = true;
+            shootDmg += shootDamageUp;
+            yield return new WaitForSeconds(10.00f);
+            shootDmg -= shootDamageUp;
+            grabbedPickup = false;
+            isDamageUp = false;
 
-        yield return new WaitForSeconds(10.00f);
-        shootRate = shootRate * item.fireRate;
-        shootDist -= item.fireDistance;
-        shootDmg -= item.damage;
-        jumpsMax -= item.addJumps;
-        sprintSpeed -= item.addSpeed;
-        grabbedPickup = false;
+        }
+        else if (item.fireDistance == 1)
+        {
+            isShootDistanceUp = true;
+            shootDist += shootDistanceUp;
+            yield return new WaitForSeconds(10.00f);
+            shootDist -= shootDistanceUp;
+            grabbedPickup = false;
+            isShootDistanceUp = false;
+
+        }
+        else
+        {
+
+            yield return new WaitForSeconds(10.00f);
+            shootDist -= item.fireDistance;
+            shootDmg -= item.damage;
+            jumpsMax -= item.addJumps;
+            sprintSpeed -= item.addSpeed;
+            grabbedPickup = false;
+        }
     }
     public void gunSelection()
     {
