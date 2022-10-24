@@ -1,10 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class basicSpawner : MonoBehaviour
 {
-
     [SerializeField] GameObject spawnPos;
     [SerializeField] GameObject specificEnemy;
     [SerializeField] int maxEnemies;
@@ -12,13 +10,6 @@ public class basicSpawner : MonoBehaviour
     int spawnedEnemies;
     bool isSpawning;
     bool canSpawn;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -27,7 +18,6 @@ public class basicSpawner : MonoBehaviour
             StartCoroutine(spawn());
         }
     }
-
     IEnumerator spawn()
     {
         isSpawning = true;
@@ -39,7 +29,6 @@ public class basicSpawner : MonoBehaviour
         yield return new WaitForSeconds(timer);
         isSpawning = false;
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))

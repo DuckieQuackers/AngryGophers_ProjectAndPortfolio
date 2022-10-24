@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class designedSpawner : MonoBehaviour
@@ -12,13 +11,6 @@ public class designedSpawner : MonoBehaviour
     int picked = 0;
     bool isSpawning;
     bool canSpawn;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {

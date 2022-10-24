@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,9 +13,6 @@ public class playerController : MonoBehaviour, iDamage
     public bool isRangeUp;
     public bool isShootDistanceUp;
 
-
-
-
     [Header("----Player Stats----")]
     [SerializeField] int HP;
     [SerializeField] float sprintSpeed;
@@ -24,12 +20,11 @@ public class playerController : MonoBehaviour, iDamage
     [SerializeField] float playerSpeed;
     [SerializeField] float jumpHeight;
     [SerializeField] float gravityModifier;
+    //stamina required
     [SerializeField] float stamina;
     [SerializeField] float currentStamina;
     [SerializeField] int poisonDmg;
     [SerializeField] float dotTickRate;
-    //stamina required
-
     [SerializeField] int jumpsMax;
     private int jumpCount;
 
@@ -54,15 +49,10 @@ public class playerController : MonoBehaviour, iDamage
     [Range(0, 1)] [SerializeField] float gunFireSoundAudVolume;
     [SerializeField] AudioClip reloadSound;
     [Range(0, 1)] [SerializeField] float reloadSoundAudVolume;
-
-
-
     [SerializeField] public List<RangedWeapons> weaponListStats = new List<RangedWeapons>();
-
 
     [Header("----- Gun Components -----")]
     [SerializeField] GameObject gunModel;
-
     int HPOrig;
     private Vector3 playerVelocity;
     Vector3 move;
@@ -80,18 +70,15 @@ public class playerController : MonoBehaviour, iDamage
     {
         HPOrig = HP;
         currentStamina = stamina;
-
         gameManager.instance.updateAmmoCount(0, 0);
         UpdatePlayerHud();
         respawn();
     }
-
     // Update is called once per frame
     void Update()
     {
         movement();
         jumping();
-
         gunSelection();
 
         if (isReloading)
@@ -129,7 +116,6 @@ public class playerController : MonoBehaviour, iDamage
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
         }
-        
     }
     IEnumerator reloadWeapon(RangedWeapons stats)
     {
@@ -183,8 +169,6 @@ public class playerController : MonoBehaviour, iDamage
                 StartCoroutine(sprintCooldown());
             }
         }
-
-
         controller.Move(playerVelocity * Time.deltaTime);
         StartCoroutine(playMovingNoises());
     }
@@ -207,7 +191,6 @@ public class playerController : MonoBehaviour, iDamage
             else
                 yield return new WaitForSeconds(.6f);
             playingMoveAudio = false;
-
         }
     }
     public void takeDamage(int dmg)
@@ -290,7 +273,6 @@ public class playerController : MonoBehaviour, iDamage
     }
     IEnumerator coolDown(itemGrabs item)
     {
-
         yield return new WaitForSeconds(10.00f);
         shootRate = shootRate * item.fireRate;
         shootDist -= item.fireDistance;
@@ -334,8 +316,6 @@ public class playerController : MonoBehaviour, iDamage
             shootRate = weaponListStats[selectedGun].fireRate;
             shootDist = weaponListStats[selectedGun].fireDistance;
             shootDmg = weaponListStats[selectedGun].damage;
-            
-
         }
         shootRate = weaponListStats[selectedGun].fireRate;
         shootDist = weaponListStats[selectedGun].fireDistance;
@@ -343,11 +323,11 @@ public class playerController : MonoBehaviour, iDamage
         shootDmg = weaponListStats[selectedGun].damage * chamber;
         reloadTime = weaponListStats[selectedGun].reloadTime;
         gunFireSound = weaponListStats[selectedGun].triggerSound;
-
         gameManager.instance.updateAmmoCount(weaponListStats[selectedGun].trackedAmmo, weaponListStats[selectedGun].trackedMaxAmmo);
         gunModel.GetComponent<MeshFilter>().sharedMesh = weaponListStats[selectedGun].designModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = weaponListStats[selectedGun].designModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
+    //update the UI function for stamina and health
     public void UpdatePlayerHud()
     {
         gameManager.instance.playerHPBar.fillAmount = (float)HP / (float)HPOrig;
@@ -365,22 +345,17 @@ public class playerController : MonoBehaviour, iDamage
         {
             gameManager.instance.updateAmmoCount(weaponListStats[selectedGun].trackedAmmo, weaponListStats[selectedGun].trackedMaxAmmo) ;
         }
-        
         transform.position = gameManager.instance.spawnPosition.transform.position;
         controller.enabled = true;
     }
-
+    // add sprint cooldown here and update UI
     IEnumerator sprintCooldown()
     {
         onCooldown = true;
         yield return new WaitForSeconds(1f);
         currentStamina = stamina;
         UpdatePlayerHud();
-        onCooldown = false;
-
-           
-
-        
+        onCooldown = false;  
     }
     public void startDoT(int ticks)
     {
@@ -402,7 +377,6 @@ public class playerController : MonoBehaviour, iDamage
             }
             takeDamage(poisonDmg);
             poisonStack.RemoveAll(i => i == 0);
-
             yield return new WaitForSeconds(dotTickRate);
         }
     }
