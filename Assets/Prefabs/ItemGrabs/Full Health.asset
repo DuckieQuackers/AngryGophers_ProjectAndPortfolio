@@ -20,4 +20,4 @@ MonoBehaviour:
   addJumps: 0
   addHealth: 1
   addStamina: 0
-  designModel: {fileID: 0}
+  name: full health

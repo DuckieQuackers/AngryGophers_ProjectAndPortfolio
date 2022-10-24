@@ -37,7 +37,6 @@ public class playerController : MonoBehaviour, iDamage
     [SerializeField] float shootRate;
     [SerializeField] float shootDist;
     [SerializeField] int shootDmg;
-    [SerializeField] int currentAmmo;
     [SerializeField] int maxAmmo;
     [SerializeField] int chamber;
     [SerializeField] int reloadTime;
@@ -263,6 +262,9 @@ public class playerController : MonoBehaviour, iDamage
     public void itemPickup(itemGrabs item)
     {
         grabbedPickup = true;
+
+        StartCoroutine(gameManager.instance.UpdatePowerText(item));
+
         if(item.fireRate > 0)
         {
             shootRate = shootRate / item.fireRate;
@@ -271,9 +273,12 @@ public class playerController : MonoBehaviour, iDamage
         shootDmg += item.damage;
         jumpsMax += item.addJumps;
         sprintSpeed += item.addSpeed;
-        maxAmmo += item.ammoCount;
+        weaponListStats[selectedGun].trackedMaxAmmo += item.ammoCount;
+        gameManager.instance.updateAmmoCount(weaponListStats[selectedGun].trackedAmmo, weaponListStats[selectedGun].trackedMaxAmmo);
+
         if (grabbedPickup)
             StartCoroutine(coolDown(item));
+
         if (HP < HPOrig && item.addHealth == 1)
         {
             HP = HPOrig;
