@@ -249,8 +249,8 @@ MonoBehaviour:
   playerSpeed: 5
   jumpHeight: 10
   gravityModifier: 25
-  stamina: 100
-  currentStamina: 100
+  stamina: 300
+  currentStamina: 300
   poisonDmg: 1
   dotTickRate: 0.75
   jumpsMax: 1

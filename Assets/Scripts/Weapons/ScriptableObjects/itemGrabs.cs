@@ -17,6 +17,6 @@ public class itemGrabs : ScriptableObject
     public int addHealth;
     public int addStamina;
 
-    //Components
-    public GameObject designModel;
+    //Name
+    public string name;
 }
