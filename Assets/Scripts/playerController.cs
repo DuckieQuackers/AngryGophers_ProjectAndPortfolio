@@ -314,14 +314,23 @@ public class playerController : MonoBehaviour, iDamage
     {
         swapStats(weaponListStats[selectedGun], false);
 
-        if (grabbedPickup)
+        if (isFireRateUp)
         {
-            if (item.fireRate > 0)
-            {
-                shootRate = shootRate / item.fireRate;
-            }
-            shootDist += item.fireDistance;
-            shootDmg += item.damage;
+            shootRate = weaponListStats[selectedGun].fireRate / shootRateUp;
+        }
+        else if (isDamageUp)
+        {
+            shootDmg = weaponListStats[selectedGun].damage + shootDamageUp;
+        }
+        else if (isShootDistanceUp)
+        {
+            shootDist = weaponListStats[selectedGun].fireDistance + shootDistanceUp;
+        }
+        else
+        {
+            shootRate = weaponListStats[selectedGun].fireRate;
+            shootDist = weaponListStats[selectedGun].fireDistance;
+            shootDmg = weaponListStats[selectedGun].damage;
         }
     }
     public void UpdatePlayerHud()
