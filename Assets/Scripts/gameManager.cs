@@ -7,7 +7,6 @@ public class gameManager : MonoBehaviour
 {
     public static gameManager instance;
     public int bossNumber;
-    public int currentAmmo;
     public int maximumAmmo;
     [Header("----- Player Stuff -----")]
     public GameObject player;
@@ -24,6 +23,8 @@ public class gameManager : MonoBehaviour
     public TextMeshProUGUI ammoTracker;
     //add stamin UI
     public Image staminaDrain;
+    public TextMeshProUGUI powerUpText;
+
     public bool isPaused;
     // Start is called before the first frame update
     void Awake()
@@ -91,5 +92,12 @@ public class gameManager : MonoBehaviour
     public void updateAmmoCount(int inMag, int inReserve)
     {
         ammoTracker.text = "Bullets: " + inMag.ToString("F0") + "/ " + inReserve.ToString("F0");
+    }
+
+    public IEnumerator UpdatePowerText(itemGrabs item)
+    {
+        powerUpText.text = "You got " + item.name + "!!";
+        yield return new WaitForSeconds(2);
+        powerUpText.text = "";
     }
 }

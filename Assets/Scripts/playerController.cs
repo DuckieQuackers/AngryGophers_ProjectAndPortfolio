@@ -32,7 +32,6 @@ public class playerController : MonoBehaviour, iDamage
     [SerializeField] float shootRate;
     [SerializeField] float shootDist;
     [SerializeField] int shootDmg;
-    [SerializeField] int currentAmmo;
     [SerializeField] int maxAmmo;
     [SerializeField] int chamber;
     [SerializeField] int reloadTime;
@@ -229,23 +228,16 @@ public class playerController : MonoBehaviour, iDamage
     }
     public void weaponPickup(RangedWeapons stats)
     {
-        shootDmg = stats.damage;
-        shootRate = stats.fireRate;
-        shootDist = stats.fireDistance;
-        shootDmg = stats.damage;
-        chamber = stats.chamber;
-        stats.trackedAmmo = stats.ammoCount;
-        stats.trackedMaxAmmo = stats.maxAmmo;
-        reloadTime = stats.reloadTime;
-        gunFireSound = stats.triggerSound;
-        gunModel.GetComponent<MeshFilter>().sharedMesh = stats.designModel.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = stats.designModel.GetComponent<MeshRenderer>().sharedMaterial;
         weaponListStats.Add(stats);
-        gameManager.instance.updateAmmoCount(stats.trackedAmmo, stats.trackedMaxAmmo);
+        selectedGun = weaponListStats.Count - 1;
+        swapStats(stats, true);
     }
     public void itemPickup(itemGrabs item)
     {
         grabbedPickup = true;
+
+        StartCoroutine(gameManager.instance.UpdatePowerText(item));
+
         if(item.fireRate > 0)
         {
             shootRate = shootRate / item.fireRate;
@@ -254,9 +246,12 @@ public class playerController : MonoBehaviour, iDamage
         shootDmg += item.damage;
         jumpsMax += item.addJumps;
         sprintSpeed += item.addSpeed;
-        maxAmmo += item.ammoCount;
+        weaponListStats[selectedGun].trackedMaxAmmo += item.ammoCount;
+        gameManager.instance.updateAmmoCount(weaponListStats[selectedGun].trackedAmmo, weaponListStats[selectedGun].trackedMaxAmmo);
+
         if (grabbedPickup)
             StartCoroutine(coolDown(item));
+
         if (HP < HPOrig && item.addHealth == 1)
         {
             HP = HPOrig;
@@ -299,6 +294,8 @@ public class playerController : MonoBehaviour, iDamage
     }
     public void weaponSwap()
     {
+        swapStats(weaponListStats[selectedGun], false);
+
         if (isFireRateUp)
         {
             shootRate = weaponListStats[selectedGun].fireRate / shootRateUp;
@@ -317,15 +314,6 @@ public class playerController : MonoBehaviour, iDamage
             shootDist = weaponListStats[selectedGun].fireDistance;
             shootDmg = weaponListStats[selectedGun].damage;
         }
-        shootRate = weaponListStats[selectedGun].fireRate;
-        shootDist = weaponListStats[selectedGun].fireDistance;
-        chamber = weaponListStats[selectedGun].chamber;
-        shootDmg = weaponListStats[selectedGun].damage * chamber;
-        reloadTime = weaponListStats[selectedGun].reloadTime;
-        gunFireSound = weaponListStats[selectedGun].triggerSound;
-        gameManager.instance.updateAmmoCount(weaponListStats[selectedGun].trackedAmmo, weaponListStats[selectedGun].trackedMaxAmmo);
-        gunModel.GetComponent<MeshFilter>().sharedMesh = weaponListStats[selectedGun].designModel.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = weaponListStats[selectedGun].designModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
     //update the UI function for stamina and health
     public void UpdatePlayerHud()
@@ -379,5 +367,24 @@ public class playerController : MonoBehaviour, iDamage
             poisonStack.RemoveAll(i => i == 0);
             yield return new WaitForSeconds(dotTickRate);
         }
+    }
+
+    void swapStats(RangedWeapons stats, bool fresh)
+    {
+        shootDmg = stats.damage;
+        shootRate = stats.fireRate;
+        shootDist = stats.fireDistance;
+        shootDmg = stats.damage;
+        chamber = stats.chamber;
+        if (fresh)
+        {
+            stats.trackedAmmo = stats.ammoCount;
+            stats.trackedMaxAmmo = stats.maxAmmo;
+        }
+        reloadTime = stats.reloadTime;
+        gunFireSound = stats.triggerSound;
+        gunModel.GetComponent<MeshFilter>().sharedMesh = stats.designModel.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = stats.designModel.GetComponent<MeshRenderer>().sharedMaterial;
+        gameManager.instance.updateAmmoCount(stats.trackedAmmo, stats.trackedMaxAmmo);
     }
 }

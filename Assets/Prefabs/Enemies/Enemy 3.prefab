@@ -793,6 +793,8 @@ MonoBehaviour:
   dropPool: []
   hitBox: {fileID: 8186209892875414401}
   hp: 20
+  isImportant: 0
+  forceDrop: 1
   attackRate: 1
   facePlayerSpeed: 3
   sightDis: 25

@@ -73,12 +73,9 @@ MonoBehaviour:
   - {fileID: 1933718105332589820, guid: 0d3aef41d55cf674ea15463c91b1dd5b, type: 3}
   - {fileID: 6457280144052288088, guid: 000c1821362af6b43824d687cfdde79e, type: 3}
   - {fileID: 1151964780656947781, guid: e5adc1658c9eba04facb4ba9ec84bd47, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   hitBox: {fileID: 7008159151479195413}
   hp: 7
+  isImportant: 0
   attackRate: 1.5
   facePlayerSpeed: 3
   sightDis: 20
