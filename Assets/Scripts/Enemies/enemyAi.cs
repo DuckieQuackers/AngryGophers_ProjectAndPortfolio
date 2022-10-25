@@ -20,6 +20,7 @@ public class enemyAi : MonoBehaviour, iDamage
     [Header("----- Enemy combat -----")]
     [Range(1, 50)][SerializeField] protected int hp;
     [SerializeField] bool isImportant;
+    [SerializeField] bool forceDrop;
     [Range(.01f, 10)] [SerializeField] protected float attackRate;
 
     [Header("----- Movement/patrol stats -----")]
@@ -157,8 +158,14 @@ public class enemyAi : MonoBehaviour, iDamage
             agent.enabled = false;
             hitBox.enabled = false;
 
-            if(drop != null)
+            if(drop != null && forceDrop)
                 Instantiate(drop, transform.position, transform.rotation);
+            else
+            {
+                int temp = Random.Range(0, 2);
+                if(temp == 0 && drop != null)
+                    Instantiate(drop, transform.position, transform.rotation);
+            }
 
             Destroy(gameObject, 10);
 
